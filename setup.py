@@ -5,8 +5,8 @@ from setuptools import setup, find_packages
 with open("README.md") as f:
     long_desc = f.read()
 
-setup(name="py-viz-algs",
-      version=0.1,
+setup(name="pythonalgorithms",
+      version=0.11,
       description="A set of algorithms and data structures",
       long_description=long_desc,
       long_description_content_type="text/markdown", 
@@ -14,11 +14,9 @@ setup(name="py-viz-algs",
       author="Evo Williamson",
       author_email="evowilliamson@gmail.com",
       license="GNU General Public License, version 2",
-      url="https://github.com/evowilliamson/py-viz-algs",
+      url="https://github.com/evowilliamson/pythonalgorithms",
       packages=find_packages(),
-      install_requires=[
-          "graphviz",
-      ],
+      install_requires=[],
       test_suite="tests",
       classifiers=[
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
@@ -28,7 +26,7 @@ setup(name="py-viz-algs",
         "Intended Audience :: Information Technology",
         "Topic :: Software Development",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.4",
         "Operating System :: OS Independent"
         ,
       ]

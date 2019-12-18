@@ -6,8 +6,6 @@ from util.logging import Logging
 
 class TestDirectedAcyclicGraph(unittest.TestCase):
 
-    DIGRAPH_VIZ = "digraph_viz"
-
     def test_init_ok(self):
         self.vertices = {0: [1], 1: [2, 3], 2: [3], 3: [4, 6], 4: [5, 6], 5: [], 6: []}
         DirectedAcyclicGraph(self.vertices)

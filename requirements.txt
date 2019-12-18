@@ -1,4 +1,2 @@
 setuptools
-graphviz
-opencv-python
 

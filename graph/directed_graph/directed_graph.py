@@ -4,7 +4,6 @@
 from graph.directed_graph.vertex import Vertex
 from graph.directed_graph import kosaraju_sccs
 from graph.directed_graph import cyclic as cyclic
-from graphviz import Digraph
 from copy import deepcopy
 from util.advisor import Advisor
 
@@ -89,23 +88,6 @@ class DirectedGraph(object):
 
     def get_vertices_count(self):
         return len(self._vertices)
-
-    def render(self, file_name="digraph", view_type=False, format="pdf"):
-        """ Renders the directed with the Graphviz library
-
-        Args: 
-            file_name(str): path and file for the file to be generated
-            view_type(bool): True if the attached program for the file is to be started on
-
-        """ 
-
-        graph = Digraph(format=format)
-        for label, vertex in self._vertices.items():
-            for head in vertex.get_heads():
-                graph.edge(str(label), str(head.get_label()))
-
-        graph.render(file_name, view=view_type)
-
 
     def __str__(self):
         res = ""

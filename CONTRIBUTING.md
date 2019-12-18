@@ -23,9 +23,6 @@ First of all, if you haven't noticed yet, it's a Python project, so you should g
 ### Pip
 Then you will have to get pip, check out this [link](https://pip.pypa.io/en/stable/installing/).
 
-### Graphviz
-You will need to install Graphviz on your system in order to render generated **dot** source code by the Python Graphviz library. Get it [here](https://pypi.org/project/graphviz/).
-
 ### Virtual environment
 It's advisable to create a Python virtual environment for this open-source project, as you don't want other libraries to cause dependency issue in this project. Take a look at this [link](https://docs.python.org/3/library/venv.html#module-venv).
 </br>
@@ -45,7 +42,7 @@ Go to your virtual environment directory and activate it:
 * ```<venv-dir>\Scripts\activate``` (windows) 
 
 ### Run the tests
-In the root of the *py-viz-algs* project, run the test cases:
+In the root of the *pythonalgorithms* project, run the test cases:
 
  ```python setup.py test```
 </br>
