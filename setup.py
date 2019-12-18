@@ -5,16 +5,16 @@ from setuptools import setup, find_packages
 with open("README.md") as f:
     long_desc = f.read()
 
-setup(name="pythonalgorithms",
-      version=0.11,
-      description="A set of algorithms and data structures",
+setup(name="python-algos",
+      version=0.12,
+      description="A set of bare algorithms",
       long_description=long_desc,
       long_description_content_type="text/markdown", 
-      keywords = "data structures algorithms graphs directed graphs acyclic",
+      keywords = "algorithms graphs directed graphs cyclic kosaraju tarjan",
       author="Evo Williamson",
       author_email="evowilliamson@gmail.com",
       license="GNU General Public License, version 2",
-      url="https://github.com/evowilliamson/pythonalgorithms",
+      url="https://github.com/evowilliamson/python-algos",
       packages=find_packages(),
       install_requires=[],
       test_suite="tests",

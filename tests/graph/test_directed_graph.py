@@ -1,8 +1,8 @@
 import unittest
-from graph.directed_graph.directed_graph import DirectedGraph
+from pythonalgos.graph.directed_graph import DirectedGraph
 import os
 import time
-from util.logging import Logging
+from pythonalgos.util.logging import Logging
 import util.path_tools as pt
 from os import path
 

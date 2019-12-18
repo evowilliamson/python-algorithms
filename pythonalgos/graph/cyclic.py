@@ -1,4 +1,4 @@
-from util.advisor import Advisor
+from pythonalgos.util.advisor import Advisor
 
 
 def is_cyclic(directed_graph, advisor: Advisor):

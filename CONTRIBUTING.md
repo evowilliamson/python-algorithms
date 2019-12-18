@@ -42,7 +42,7 @@ Go to your virtual environment directory and activate it:
 * ```<venv-dir>\Scripts\activate``` (windows) 
 
 ### Run the tests
-In the root of the *pythonalgorithms* project, run the test cases:
+In the root of the *python-algos* project, run the test cases:
 
  ```python setup.py test```
 </br>

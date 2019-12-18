@@ -1,7 +1,7 @@
 """ Module that contains the definition of a directed acyclic graph 
 """
 
-from graph.directed_graph.directed_graph import DirectedGraph
+from pythonalgos.graph.directed_graph import DirectedGraph
 
 class DirectedAcyclicGraph(DirectedGraph):
     """ Class to represent a directed acyclic graph. It inherits from DirectedGraph  

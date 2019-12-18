@@ -1,4 +1,4 @@
-from util.logging import Logging
+from pythonalgos.util.logging import Logging
 
 """ Module that contains the logic for kosaraju's SCCs algorithm
 """

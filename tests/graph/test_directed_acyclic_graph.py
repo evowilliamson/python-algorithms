@@ -1,7 +1,7 @@
 import unittest
-from graph.directed_graph.directed_acyclic_graph.directed_acyclic_graph import DirectedAcyclicGraph
+from pythonalgos.graph.directed_acyclic_graph import DirectedAcyclicGraph
 import time
-from util.logging import Logging
+from pythonalgos.util.logging import Logging
 
 
 class TestDirectedAcyclicGraph(unittest.TestCase):
