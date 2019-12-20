@@ -4,6 +4,7 @@
 from pythonalgos.graph.vertex import Vertex
 from pythonalgos.graph import kosaraju_sccs
 from pythonalgos.graph import cyclic as cyclic
+from pythonalgos.graph import directed_trail as trail
 from copy import deepcopy
 from pythonalgos.util.advisor import Advisor
 
@@ -63,7 +64,7 @@ class DirectedGraph(object):
     def get_vertices(self):
         """ Returns the vertices dictionary 
 
-        Returns:
+        Returns
             self._vertices (dict)
 
         """
@@ -85,6 +86,15 @@ class DirectedGraph(object):
         else:
             self._vertices[tail].add_edge(self._vertices[head])
             self._vertices[head].increase_indegree()
+
+    def get_all_edges(self):
+        """ Method that retrieves all edges of all vertices
+
+        Returns:
+            set(): A set of all edges in the directed graph
+        """
+
+        return {e for v in self._vertices.values() for e in v.get_edges() }
 
     def get_vertices_count(self):
         return len(self._vertices)
@@ -131,3 +141,14 @@ class DirectedGraph(object):
         """
 
         return cyclic.is_cyclic(self, advisor)
+
+    def trail(self, advisor=Advisor()):
+        """ Method that trails the directed graph
+
+         Args:
+            advisor(Advisor): The class that implements the advice that is to be inserted
+                at join points in the algorith. The default advice is empty
+        
+        """
+
+        return trail.trail(self, advisor)

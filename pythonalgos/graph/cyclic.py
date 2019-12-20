@@ -1,3 +1,11 @@
+""" Module that contains a main function that checks whether a directed graph is
+cyclic or not 
+
+Calls to advice insertions are included at join-points. These calls belong to a 
+abstract class Advisor, which must be implemented by interested parties
+
+"""
+
 from pythonalgos.util.advisor import Advisor
 
 
