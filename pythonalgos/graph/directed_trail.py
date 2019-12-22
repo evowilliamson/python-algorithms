@@ -25,8 +25,6 @@ def trail(directed_graph, advisor: Advisor):
 
     VISITED = "visited"
 
-    print("******************")
-
     def is_edge_visited(edge):
         if edge.get_attr(VISITED):
             return True
@@ -56,7 +54,6 @@ def trail(directed_graph, advisor: Advisor):
 
 
     for label, vertex in directed_graph.get_vertices().items():
-        print("^^^^^^^^^^^^^^^^^^^^^^^")
         _trail_dfs(directed_graph, vertex)
 
 
