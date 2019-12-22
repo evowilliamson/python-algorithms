@@ -1,4 +1,4 @@
-from pythonalgos.graph.edge import Edge
+from . edge import Edge
 
 """ Module that contains the definition of a vertex in the context of a directed graph
 """

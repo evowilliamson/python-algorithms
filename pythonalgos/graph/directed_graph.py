@@ -1,12 +1,12 @@
 """ Module that contains the definition of a directed graph as a class
 """
 
-from pythonalgos.graph.vertex import Vertex
-from pythonalgos.graph import kosaraju_sccs
-from pythonalgos.graph import cyclic as cyclic
-from pythonalgos.graph import directed_trail as trail
+from . vertex import Vertex
+from . import kosaraju_sccs
+from . import cyclic as cyclic
+from . import directed_trail as trail
 from copy import deepcopy
-from pythonalgos.util.advisor import Advisor
+from .. util.advisor import Advisor
 
 class DirectedGraph(object):
     """ Class to represent directed graphs. https://en.wikipedia.org/wiki/Directed_graph """

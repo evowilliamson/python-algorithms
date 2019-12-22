@@ -1,10 +1,12 @@
 """ Module that contains the definition of a directed acyclic graph 
 """
 
-from pythonalgos.graph.directed_graph import DirectedGraph
+from . import DirectedGraph
 
 class DirectedAcyclicGraph(DirectedGraph):
     """ Class to represent a directed acyclic graph. It inherits from DirectedGraph  
+    and when calling the __init__ constructor, it will check whether the graph adheres
+    to the fact that the graph doesn't contain a cycle
     """
 
     def __init__(self, vertices):
