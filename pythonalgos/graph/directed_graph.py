@@ -81,8 +81,8 @@ class DirectedGraph(object):
         """
 
         if tail not in self._vertices or head not in self._vertices:
-            raise RuntimeError("Destination or source of edge ('{}'".format(head) +
-                                       ",'{}'".format(tail) + ") cannot be found as a vertex")
+            raise RuntimeError("Destination or source of edge ('{}'".format(tail) +
+                                       ",'{}'".format(head) + ") cannot be found as a vertex")
         else:
             self._vertices[tail].add_edge(self._vertices[head])
             self._vertices[head].increase_indegree()
