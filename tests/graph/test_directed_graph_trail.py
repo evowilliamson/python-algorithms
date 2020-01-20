@@ -6,8 +6,8 @@ from pythonalgos.graph.directed_graph import DirectedGraph
 import os
 import time
 from pythonalgos.util.logging import Logging
-import util.path_tools as pt
-from util.advisor import Advisor
+from pythonalgos.util import path_tools as pt
+from pythonalgos.util.advisor import Advisor
 from os import path
 
 COUNT = "count"

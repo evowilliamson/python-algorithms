@@ -3,12 +3,13 @@
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
     "python.jediEnabled": false,
     "files.exclude": {
+        "**/*.pyc": {"when": "$(basename).py"},
         "**/__pycache__": true
     },
     "workbench.settings.editor": "json",
     "workbench.settings.openDefaultSettings": true,
     "window.zoomLevel": 0,
-    "python.pythonPath": "${workspaceFolder}/venv/bin/python",
+    "python.pythonPath": "./venv/bin/python",
     "files.watcherExclude": {
         "**/venv/*/**": true
     },
@@ -21,9 +22,9 @@
         "-s",
         "./tests",
         "-p",
-        "test*.py"
+        "test_*.py"
     ],
     "python.testing.pytestEnabled": false,
     "python.testing.nosetestsEnabled": false,
-    "python.testing.unittestEnabled": true    
+    "python.testing.unittestEnabled": true
 }
