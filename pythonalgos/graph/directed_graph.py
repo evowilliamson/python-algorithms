@@ -8,6 +8,7 @@ from . import directed_trail as trail
 from copy import deepcopy
 from .. util.advisor import Advisor
 
+
 class DirectedGraph(object):
     """ Class to represent directed graphs. https://en.wikipedia.org/wiki/Directed_graph """
 
@@ -19,7 +20,7 @@ class DirectedGraph(object):
 
         """
 
-        self._vertices = dict()        
+        self._vertices = dict()
         if vertices is not None:
             for label in vertices.keys():
                 self.add_vertex(label)
@@ -33,23 +34,23 @@ class DirectedGraph(object):
         Returns:
             the copied directed graph
         """
-        
+
         return deepcopy(self)
 
     def add_vertex(self, label):
-        """ Adds a vertex to the dictionary of vertices 
+        """ Adds a vertex to the dictionary of vertices
 
         Args:
             label: a vertex represented by its label
         """
 
         if label in self._vertices:
-            raise RuntimeError("vertex = '{}'".format(label) + 
+            raise RuntimeError("vertex = '{}'".format(label) +
                                " is already a vertex in this directed graph")
         self._vertices[label] = Vertex(label)
 
     def get_vertex(self, label):
-        """ Returns the vertex that coincides with the label 
+        """ Returns the vertex that coincides with the label
 
         Args:
             label: a vertex represented by its label
@@ -62,7 +63,7 @@ class DirectedGraph(object):
         return self._vertices[label]
 
     def get_vertices(self):
-        """ Returns the vertices dictionary 
+        """ Returns the vertices dictionary
 
         Returns
             self._vertices (dict)
@@ -70,7 +71,7 @@ class DirectedGraph(object):
         """
 
         return self._vertices
-        
+
     def add_edge(self, tail, head):
         """ Adds an edge to the graph, the edge is identified by a tail and a head vertex
 
@@ -82,7 +83,7 @@ class DirectedGraph(object):
 
         if tail not in self._vertices or head not in self._vertices:
             raise RuntimeError("Destination or source of edge ('{}'".format(tail) +
-                                       ",'{}'".format(head) + ") cannot be found as a vertex")
+                               ",'{}'".format(head) + ") cannot be found as a vertex")
         else:
             self._vertices[tail].add_edge(self._vertices[head])
             self._vertices[head].increase_indegree()
@@ -94,7 +95,7 @@ class DirectedGraph(object):
             set(): A set of all edges in the directed graph
         """
 
-        return {e for v in self._vertices.values() for e in v.get_edges() }
+        return {e for v in self._vertices.values() for e in v.get_edges()}
 
     def get_vertices_count(self):
         return len(self._vertices)
@@ -107,10 +108,10 @@ class DirectedGraph(object):
         return res
 
     def get_reversed_graph(self):
-        """ Function that returns the reverse of this graph  
+        """ Function that returns the reverse of this graph
 
         Args:
-            directed_graph (DirectedGraph): The directed graph 
+            directed_graph (DirectedGraph): The directed graph
 
         Returns:
             DirectedGraph: The reversed graph
@@ -128,7 +129,7 @@ class DirectedGraph(object):
 
         return reversed
 
-    def create_sccs_kosaraju_dfs(self, nontrivial=True): 
+    def create_sccs_kosaraju_dfs(self, nontrivial=True):
         return kosaraju_sccs.create_sccs_kosaraju_dfs(self, nontrivial)
 
     def is_cyclic(self, advisor=Advisor()):
@@ -137,7 +138,6 @@ class DirectedGraph(object):
         Args:
             advisor(Advisor): The class that implements the advice that is to be inserted
                 at join points in the algorith. The default advice is empty
-        
         """
 
         return cyclic.is_cyclic(self, advisor)
@@ -148,7 +148,6 @@ class DirectedGraph(object):
          Args:
             advisor(Advisor): The class that implements the advice that is to be inserted
                 at join points in the algorith. The default advice is empty
-        
         """
 
         return trail.trail(self, advisor)
