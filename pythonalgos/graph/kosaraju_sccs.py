@@ -5,11 +5,11 @@ from .. util.logging import Logging
 
 
 def create_sccs_kosaraju_dfs(directed_graph, nontrivial):
-    """ Function that creates a list of strongly connected components according to 
+    """ Function that creates a list of strongly connected components according to
     Kosaraju's algorithm (https://en.wikipedia.org/wiki/Kosaraju%27s_algorithm) with a
     depth-first-search approach.
 
-    Args: 
+    Args:
         directed_graph (DirectedGraph): The directed graph for which the SCCS should be calculated
         nontrivial(bool): If True, only nontrivial sccs will be returned, otherwise all sccs
 
@@ -45,7 +45,7 @@ def create_sccs_kosaraju_dfs(directed_graph, nontrivial):
 def filter_nontrivial(sccs_trivial, directed_graph):
     """ This function filters out the trivial sccs
 
-    A scc is nontrivial, iff there are at least two vertices in it, 
+    A scc is nontrivial, iff there are at least two vertices in it,
     or there is only one vertex with a self-loop. A self-loop means
     that the indegree and the outdegree are both 1 and the tail is equal
     to the head
@@ -64,7 +64,7 @@ def filter_nontrivial(sccs_trivial, directed_graph):
         vertex = directed_graph.get_vertex(list(scc)[0])
         if (len(scc) >= 2) or \
             (len(scc) == 1 and vertex.get_indegree() == 1 and
-            vertex.get_outdegree() == 1) and list(vertex.get_heads())[0] == list(scc)[0]:
+                vertex.get_outdegree() == 1) and list(vertex.get_heads())[0] == list(scc)[0]:
             sccs_non_trivial.append(scc)
 
     return sccs_non_trivial
@@ -75,7 +75,7 @@ def visit_dfs_sccs(directed_graph, vertex, visited, scc):
     to check whether vertices have been visisted
 
     Args:
-        directed_graph(DirectedGraph): The directed graph 
+        directed_graph(DirectedGraph): The directed graph
         vertex (label): The current vertex
         visited (dict): A dictionary that maintains whether vertices have been visisted
         scc (set): The current scc being constructed
@@ -94,7 +94,7 @@ def fill_order_dfd_sccs(directed_graph, vertex, visited, stack):
     the order of vertices, traversing the graph with a depth first search, recursively
 
     Args:
-        directed_graph (DirectedGraph): The directed graph 
+        directed_graph (DirectedGraph): The directed graph
         vertex: The current vertex
         visited (dict): A dictionary that maintains whether vertices have been visisted
         stack (list): stack that will be processed, used to inverse the order
@@ -106,7 +106,3 @@ def fill_order_dfd_sccs(directed_graph, vertex, visited, stack):
         if visited.get(head.get_label()) is None:
             fill_order_dfd_sccs(directed_graph, head.get_label(), visited, stack)
     stack = stack.append(vertex)
-
-
-
-    

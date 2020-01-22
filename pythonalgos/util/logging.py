@@ -1,6 +1,8 @@
 """ Module that defines a logging class that offers basic logging with indentation
 and log yes/no switch
 """
+
+
 class Logging:
     """ Class that is accessed in a static way. It contains functions for basic logging
     """
@@ -25,7 +27,6 @@ class Logging:
             message: The message (with placeholders) to be logged
             args: The actual values that will replace the placeholders
             inc(bool). If True, first an indent will be perfromed. If false, no indent
-            
         """
 
         if Logging.logging:
@@ -35,15 +36,14 @@ class Logging:
             if (inc == -1):
                 Logging.inc_level -= 1
 
-    @classmethod            
+    @classmethod
     def inc_indent(cls):
         Logging.inc_level += 1
 
-    @classmethod            
+    @classmethod
     def dec_indent(cls):
         Logging.inc_level -= 1
 
-    @classmethod            
+    @classmethod
     def set_inc_size(cls, size):
         Logging.inc_size = size
-

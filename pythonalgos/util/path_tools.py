@@ -28,5 +28,4 @@ def append_to_path(top_parent_package):
     name = os.path.realpath(__file__)
     while name.split("/")[-1] != top_parent_package:
         name = os.path.dirname(name)
-    sys.path.append(os.path.dirname(name))    
-
+    sys.path.append(os.path.dirname(name))
