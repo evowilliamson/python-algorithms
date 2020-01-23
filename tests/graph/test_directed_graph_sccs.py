@@ -29,8 +29,9 @@ class TestDirectedGraphSCCs(unittest.TestCase):
                     sorted_vertices) + " not in expected sccs")
 
     def test_create_sccs_extra(self):
-        self.vertices = {"A": ["B"], "B": ["C", "D"], "C": ["A"], "D": ["E"], "E": ["F"],
-                         "F": ["D"], "G": ["F", "H"], "H": ["I"], "I": ["J"], "J": ["G", "K"], "K": []}
+        self.vertices = {"A": ["B"], "B": ["C", "D"], "C": ["A"], "D": ["E"],
+                         "E": ["F"], "F": ["D"], "G": ["F", "H"], "H": ["I"],
+                         "I": ["J"], "J": ["G", "K"], "K": []}
         self.directed_graph = DirectedGraph(self.vertices)
         sccs = self.directed_graph.create_sccs_kosaraju_dfs(nontrivial=False)
         sccs_expected = [["A", "B", "C"], [
@@ -40,7 +41,7 @@ class TestDirectedGraphSCCs(unittest.TestCase):
             if sorted_vertices not in sccs_expected:
                 self.assertFalse(True, msg=str(
                     sorted_vertices) + " not in expected sccs")
-    
+
     def tearDown(self):
         pass
 

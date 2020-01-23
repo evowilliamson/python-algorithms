@@ -28,7 +28,7 @@ class TestDirectedGraphCyclic(unittest.TestCase):
             3], 3: [4, 6], 4: [5, 6], 5: [], 6: []}
         self.directed_graph = DirectedGraph(self.vertices)
         self.assertFalse(self.directed_graph.is_cyclic())
-                
+
     def tearDown(self):
         pass
 

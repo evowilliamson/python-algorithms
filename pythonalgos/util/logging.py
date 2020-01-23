@@ -26,13 +26,15 @@ class Logging:
         Args:
             message: The message (with placeholders) to be logged
             args: The actual values that will replace the placeholders
-            inc(bool). If True, first an indent will be perfromed. If false, no indent
+            inc(bool). If True, first an indent will be perfromed. If false,
+            no indent
         """
 
         if Logging.logging:
             if (inc != -1):
                 Logging.inc_level += inc
-            print(" " * (Logging.inc_level * Logging.inc_size) + message.format(*args))
+            print(" " * (Logging.inc_level * Logging.inc_size) +
+                  message.format(*args))
             if (inc == -1):
                 Logging.inc_level -= 1
 

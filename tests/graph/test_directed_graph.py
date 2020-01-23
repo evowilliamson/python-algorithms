@@ -27,7 +27,6 @@ class TestDirectedGraph(unittest.TestCase):
     def test_one_vertex_self_loop(self):
         self.vertices = {0: [0]}
         self.directed_graph = DirectedGraph(self.vertices)
-        a = 100
 
     def test_add_vertex(self):
         label = 7
@@ -60,8 +59,8 @@ class TestDirectedGraph(unittest.TestCase):
 
     def test_indegree(self):
         vertex_to_test = 6
-        self.vertices = {0: [1], 1: [2, 3], 2: [3], 3: [4, vertex_to_test], 4: [
-            5, vertex_to_test], 5: [5], vertex_to_test: []}
+        self.vertices = {0: [1], 1: [2, 3], 2: [3], 3: [4, vertex_to_test],
+                         4: [5, vertex_to_test], 5: [5], vertex_to_test: []}
         self.directed_graph = DirectedGraph(self.vertices)
         vertex = self.directed_graph.get_vertex(vertex_to_test)
         self.assertEqual(vertex.get_indegree(), 2)
