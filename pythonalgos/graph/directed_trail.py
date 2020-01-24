@@ -15,14 +15,13 @@ from . edge import Edge
 
 
 def trail(directed_graph, advisor: Advisor):
-    """ Main function that walks the directed graph, restricted by the trail feature
-    (no edge repetitions)
+    """ Main function that walks the directed graph, restricted by the trail
+     feature (no edge repetitions)
 
     Args:
         directed_graph (DirectedGraph): The directed graph
-        advisor (Advisor): Object that contains advice which can be inserted at join points
-
-    """
+        advisor (Advisor): Object that contains advice which can be inserted
+        at join points """
 
     _advisor = advisor
 

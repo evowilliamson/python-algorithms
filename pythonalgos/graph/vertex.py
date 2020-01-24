@@ -68,4 +68,5 @@ class Vertex():
     def __str__(self):
         return "outdegree: {}".format(self.get_outdegree()) + \
                ", indegree: {}".format(self.get_indegree()) + \
-               ", heads: " + ",".join([str(tail.get_label()) for tail in self.get_heads()])
+               ", heads: " + ",".join([str(tail.get_label())
+                                      for tail in self.get_heads()])

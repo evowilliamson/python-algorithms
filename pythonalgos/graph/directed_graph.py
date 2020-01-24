@@ -1,5 +1,4 @@
-""" Module that contains the definition of a directed graph as a class
-"""
+""" Module that contains the definition of a directed graph as a class """
 
 from . vertex import Vertex
 from . import kosaraju_sccs
@@ -17,7 +16,6 @@ class DirectedGraph(object):
 
         Args:
             vertices(dict): a dict with the vertices and their tails in it
-
         """
 
         self._vertices = dict()
@@ -32,8 +30,7 @@ class DirectedGraph(object):
         """ Copies the directed graph and returns it
 
         Returns:
-            the copied directed graph
-        """
+            the copied directed graph """
 
         return deepcopy(self)
 
@@ -41,8 +38,7 @@ class DirectedGraph(object):
         """ Adds a vertex to the dictionary of vertices
 
         Args:
-            label: a vertex represented by its label
-        """
+            label: a vertex represented by its label """
 
         if label in self._vertices:
             raise RuntimeError("vertex = '{}'".format(label) +
@@ -56,9 +52,7 @@ class DirectedGraph(object):
             label: a vertex represented by its label
 
         Returns:
-            Vertex: the requested vertex
-
-        """
+            Vertex: the requested vertex """
 
         return self._vertices[label]
 
@@ -66,24 +60,22 @@ class DirectedGraph(object):
         """ Returns the vertices dictionary
 
         Returns
-            self._vertices (dict)
-
-        """
+            self._vertices (dict) """
 
         return self._vertices
 
     def add_edge(self, tail, head):
-        """ Adds an edge to the graph, the edge is identified by a tail and a head vertex
+        """ Adds an edge to the graph, the edge is identified by a tail and
+        a head vertex.
 
         Args:
             tail: the edge that represents the start vertex
-            head: the edge that represents the destination vertex
-
-        """
+            head: the edge that represents the destination vertex """
 
         if tail not in self._vertices or head not in self._vertices:
-            raise RuntimeError("Destination or source of edge ('{}'".format(tail) +
-                               ",'{}'".format(head) + ") cannot be found as a vertex")
+            raise RuntimeError("Destination or source of edge ('{}'"
+                               .format(tail) + ",'{}'".format(head) +
+                               ") cannot be found as a vertex")
         else:
             self._vertices[tail].add_edge(self._vertices[head])
             self._vertices[head].increase_indegree()
@@ -92,8 +84,7 @@ class DirectedGraph(object):
         """ Method that retrieves all edges of all vertices
 
         Returns:
-            set(): A set of all edges in the directed graph
-        """
+            set(): A set of all edges in the directed graph """
 
         return {e for v in self._vertices.values() for e in v.get_edges()}
 
@@ -114,9 +105,7 @@ class DirectedGraph(object):
             directed_graph (DirectedGraph): The directed graph
 
         Returns:
-            DirectedGraph: The reversed graph
-
-        """
+            DirectedGraph: The reversed graph """
 
         reversed = DirectedGraph()
         for i in self.get_vertices().keys():
@@ -133,12 +122,13 @@ class DirectedGraph(object):
         return kosaraju_sccs.create_sccs_kosaraju_dfs(self, nontrivial)
 
     def is_cyclic(self, advisor=Advisor()):
-        """ Method that uses a helper module to check for cycles in the directed graph
+        """ Method that uses a helper module to check for cycles in the
+        directed graph.
 
         Args:
-            advisor(Advisor): The class that implements the advice that is to be inserted
-                at join points in the algorith. The default advice is empty
-        """
+            advisor(Advisor): The class that implements the advice that is to
+            be inserted at join points in the algorith. The default advice is
+            empty """
 
         return cyclic.is_cyclic(self, advisor)
 
@@ -146,8 +136,8 @@ class DirectedGraph(object):
         """ Method that trails the directed graph
 
          Args:
-            advisor(Advisor): The class that implements the advice that is to be inserted
-                at join points in the algorith. The default advice is empty
-        """
+            advisor(Advisor): The class that implements the advice that is to
+            be inserted at join points in the algorith. The default advice is
+            empty """
 
         return trail.trail(self, advisor)

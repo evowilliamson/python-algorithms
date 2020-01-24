@@ -5,13 +5,15 @@ from .. util.logging import Logging
 
 
 def create_sccs_kosaraju_dfs(directed_graph, nontrivial):
-    """ Function that creates a list of strongly connected components according to
-    Kosaraju's algorithm (https://en.wikipedia.org/wiki/Kosaraju%27s_algorithm) with a
+    """ Function that creates a list of strongly connected components
+    according to Kosaraju's algorithm
+    (https://en.wikipedia.org/wiki/Kosaraju%27s_algorithm) with a
     depth-first-search approach.
 
     Args:
-        directed_graph (DirectedGraph): The directed graph for which the SCCS should be calculated
-        nontrivial(bool): If True, only nontrivial sccs will be returned, otherwise all sccs
+        directed_graph (DirectedGraph): The directed graph for which the SCCS
+        should be calculated nontrivial(bool): If True, only nontrivial sccs
+        will be returned, otherwise all sccs
 
     Returns:
         list(set()) of SCCs: Each SCC is a set of vertices
@@ -64,7 +66,8 @@ def filter_nontrivial(sccs_trivial, directed_graph):
         vertex = directed_graph.get_vertex(list(scc)[0])
         if (len(scc) >= 2) or \
             (len(scc) == 1 and vertex.get_indegree() == 1 and
-                vertex.get_outdegree() == 1) and list(vertex.get_heads())[0] == list(scc)[0]:
+                vertex.get_outdegree() == 1) and \
+                list(vertex.get_heads())[0] == list(scc)[0]:
             sccs_non_trivial.append(scc)
 
     return sccs_non_trivial
@@ -91,7 +94,8 @@ def visit_dfs_sccs(directed_graph, vertex, visited, scc):
 
 def fill_order_dfd_sccs(directed_graph, vertex, visited, stack):
     """ Function that covers the first part of the algorith by determining
-    the order of vertices, traversing the graph with a depth first search, recursively
+    the order of vertices, traversing the graph with a depth first search,
+    recursively.
 
     Args:
         directed_graph (DirectedGraph): The directed graph
@@ -104,5 +108,6 @@ def fill_order_dfd_sccs(directed_graph, vertex, visited, stack):
     visited[vertex] = True
     for head in directed_graph.get_vertices()[vertex].get_heads():
         if visited.get(head.get_label()) is None:
-            fill_order_dfd_sccs(directed_graph, head.get_label(), visited, stack)
+            fill_order_dfd_sccs(directed_graph, head.get_label(), visited,
+                                stack)
     stack = stack.append(vertex)

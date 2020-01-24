@@ -11,7 +11,8 @@ def create_dir_in_user_home(dir, overwrite=True):
 
 
 def clean_dir_in_user_home(dir):
-    if Path(str(get_user_home()), dir).exists() and Path(str(get_user_home()), dir).is_dir():
+    if Path(str(get_user_home()), dir).exists() and \
+            Path(str(get_user_home()), dir).is_dir():
         shutil.rmtree(Path(get_user_home(), dir))
 
 

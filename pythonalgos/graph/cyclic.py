@@ -2,9 +2,7 @@
 is cyclic or not
 
 Calls to advice insertions are included at join-points. These calls belong to a
-abstract class Advisor, which must be implemented by interested parties
-
-"""
+abstract class Advisor, which must be implemented by interested parties """
 
 from .. util.advisor import Advisor
 from . directed_graph import DirectedGraph
@@ -20,9 +18,7 @@ def is_cyclic(directed_graph: DirectedGraph, advisor: Advisor):
         join points
 
     Returns:
-        bool: True if the directed graph contains a cycle, otherwise False
-
-    """
+        bool: True if the directed graph contains a cycle, otherwise False """
 
     _advisor = advisor
 
@@ -49,9 +45,7 @@ def is_cyclic(directed_graph: DirectedGraph, advisor: Advisor):
                 that vertex is not part of a cycle, it's value is false
 
         Returns:
-            bool: True if the vertex was in_cycle before, False otherwise
-
-        """
+            bool: True if the vertex was in_cycle before, False otherwise """
 
         visited_already[vertex.get_label()] = True
         in_cycle[vertex.get_label()] = True
@@ -78,6 +72,12 @@ def is_cyclic(directed_graph: DirectedGraph, advisor: Advisor):
         return False
 
     def _is_cyclic_inner(directed_graph: DirectedGraph):
+        """ Main function that loops through the vertices and starts
+        the traversal for each vertex.
+
+        Args:
+            directed_graph (DirectedGraph): The directed graph """
+
         visited_already = dict()
         in_cycle = {i: False for i in directed_graph.get_vertices().keys()}
         for label, vertex in directed_graph.get_vertices().items():
