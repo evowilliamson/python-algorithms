@@ -9,9 +9,6 @@ abstract class Advisor, which must be implemented by interested parties
 """
 
 from .. util.advisor import Advisor
-from . directed_graph import DirectedGraph
-from . vertex import Vertex
-from . edge import Edge
 
 
 def trail(directed_graph, advisor: Advisor):
@@ -27,13 +24,13 @@ def trail(directed_graph, advisor: Advisor):
 
     VISITED = "visited"
 
-    def is_edge_visited(edge: Edge):
+    def is_edge_visited(edge):
         if edge.get_attr(VISITED):
             return True
         else:
             return False
 
-    def _trail_dfs(directed_graph: DirectedGraph, vertex: Vertex):
+    def _trail_dfs(directed_graph, vertex):
         """ Function that recursively walks the directed graph
 
         Args:

@@ -5,11 +5,9 @@ Calls to advice insertions are included at join-points. These calls belong to a
 abstract class Advisor, which must be implemented by interested parties """
 
 from .. util.advisor import Advisor
-from . directed_graph import DirectedGraph
-from . vertex import Vertex
 
 
-def is_cyclic(directed_graph: DirectedGraph, advisor: Advisor):
+def is_cyclic(directed_graph, advisor: Advisor):
     """ Function that checks whether a directed graph contains a cycle or not
 
     Args:
@@ -22,8 +20,7 @@ def is_cyclic(directed_graph: DirectedGraph, advisor: Advisor):
 
     _advisor = advisor
 
-    def _is_cyclic_dfs(directed_graph: DirectedGraph, vertex: Vertex,
-                       visited_already, in_cycle):
+    def _is_cyclic_dfs(directed_graph, vertex, visited_already, in_cycle):
         """ Function that recursively searches the directed graph depth first
         and checks if a vertex was already in_cycle before.
 
@@ -71,7 +68,7 @@ def is_cyclic(directed_graph: DirectedGraph, advisor: Advisor):
         in_cycle[vertex.get_label()] = False
         return False
 
-    def _is_cyclic_inner(directed_graph: DirectedGraph):
+    def _is_cyclic_inner(directed_graph):
         """ Main function that loops through the vertices and starts
         the traversal for each vertex.
 
