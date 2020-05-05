@@ -23,8 +23,6 @@ def trail(directed_graph: DirectedGraphCore, advisor: Advisor):
         advisor (Advisor): Object that contains advice which can be inserted
         at join points """
 
-    _advisor = advisor
-
     VISITED = "visited"
 
     def is_edge_visited(edge):
@@ -33,7 +31,7 @@ def trail(directed_graph: DirectedGraphCore, advisor: Advisor):
         else:
             return False
 
-    def _trail_dfs(directed_graphP: DirectedGraphCore, vertex: Vertex):
+    def _trail_dfs(vertex: Vertex):
         """ Function that recursively walks the directed graph
 
         Args:
@@ -46,11 +44,11 @@ def trail(directed_graph: DirectedGraphCore, advisor: Advisor):
             if not is_edge_visited(edge):
                 edge.set_attr(VISITED, True)
                 advisor.advise("edge_not_visited", directed_graph, edge)
-                _trail_dfs(directed_graph, edge.get_head())
+                _trail_dfs(edge.get_head())
             else:
                 advisor.advise("edge_visited_already", directed_graph, edge)
 
         return False
 
-    for label, vertex in directed_graph.get_vertices().items():
-        _trail_dfs(directed_graph, vertex)
+    for _, vertex in directed_graph.get_vertices().items():
+        _trail_dfs(vertex)

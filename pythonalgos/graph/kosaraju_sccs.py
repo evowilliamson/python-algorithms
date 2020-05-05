@@ -1,7 +1,6 @@
 from .. util.logging import Logging
 from . directed_graph_core import DirectedGraphCore
-from . vertex import Vertex
-from typing import Mapping, Any, List, Set
+from typing import Dict, Any, List, MutableMapping, Set
 
 """ Module that contains the logic for kosaraju's SCCs algorithm
 """
@@ -79,7 +78,7 @@ def filter_nontrivial(sccs_trivial: List[Set[int]],
 
 
 def visit_dfs_sccs(directed_graph: DirectedGraphCore, vertex: str,
-                   visited: Mapping[bool, Vertex], scc: Set[int]):
+                   visited: MutableMapping[Any, bool], scc: Set[Any]):
     """ Function that performs a recursive depth first search on the directed
     graph to check whether vertices have been visisted
 
@@ -100,7 +99,7 @@ def visit_dfs_sccs(directed_graph: DirectedGraphCore, vertex: str,
 
 
 def fill_order_dfd_sccs(directed_graph: DirectedGraphCore, vertex: str,
-                        visited: Mapping[Vertex, bool], stack: List):
+                        visited: MutableMapping[Any, bool], stack: List):
     """ Function that covers the first part of the algorith by determining
     the order of vertices, traversing the graph with a depth first search,
     recursively.

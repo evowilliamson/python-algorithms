@@ -57,7 +57,7 @@ class Vertex():
         """ This method decreases the indegree for the incumbent vertex """
         self._indegree -= 1
 
-    def get_heads(self) -> str:
+    def get_heads(self) -> List[Vertex]:
         return [e.get_head() for e in self._edges]
 
     def get_edges(self) -> List[Edge]:

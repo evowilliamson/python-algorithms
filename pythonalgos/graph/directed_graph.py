@@ -26,7 +26,7 @@ class DirectedGraph(object):
 
         self.directed_graph = DirectedGraphCore(vertices)
 
-    def copy(self) -> DirectedGraphCore:
+    def copy(self) -> DirectedGraph:
         """ Copies the directed graph and returns it
 
         Returns:
@@ -85,28 +85,9 @@ class DirectedGraph(object):
     def __str__(self):
         return self.directed_graph.__str__()
 
-    def get_reversed_graph(self) -> DirectedGraph:
-        """ Function that returns the reverse of this graph
-
-        Args:
-            directed_graph (DirectedGraph): The directed graph
-
-        Returns:
-            DirectedGraph: The reversed graph """
-
-        reversed = DirectedGraph()
-        for i in self.get_vertices().keys():
-            reversed.add_vertex(i)
-
-        for i in self.get_vertices().keys():
-            vertex = self.get_vertex(i)
-            for j in vertex.get_heads():
-                reversed.add_edge(j.get_label(), i)
-
-        return reversed
-
     def create_sccs_kosaraju_dfs(self, nontrivial: bool = True):
-        return kosaraju_sccs.create_sccs_kosaraju_dfs(self, nontrivial)
+        return kosaraju_sccs.create_sccs_kosaraju_dfs(self.directed_graph,
+                                                      nontrivial)
 
     def is_cyclic(self, advisor: Advisor = Advisor()):
         """ Method that uses a helper module to check for cycles in the
@@ -117,7 +98,7 @@ class DirectedGraph(object):
             be inserted at join points in the algorith. The default advice is
             empty """
 
-        return cyclic.is_cyclic(self, advisor)
+        return cyclic.is_cyclic(self.directed_graph, advisor)
 
     def trail(self, advisor: Advisor = Advisor()):
         """ Method that trails the directed graph
@@ -127,4 +108,4 @@ class DirectedGraph(object):
             be inserted at join points in the algorith. The default advice is
             empty """
 
-        return trail.trail(self, advisor)
+        return trail.trail(self.directed_graph, advisor)

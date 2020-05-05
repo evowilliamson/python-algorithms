@@ -1,7 +1,7 @@
 from __future__ import annotations
 from . vertex import Vertex
 from copy import deepcopy
-from typing import Set
+from typing import Set, Mapping, Any, List
 from . edge import Edge
 
 """ Module that contains the definition of a directed graph as a class """
@@ -87,6 +87,26 @@ class DirectedGraphCore(object):
             set(): A set of all edges in the directed graph """
 
         return {e for v in self._vertices.values() for e in v.get_edges()}
+
+    def get_reversed_graph(self) -> DirectedGraphCore:
+        """ Function that returns the reverse of this graph
+
+        Args:
+            directed_graph (DirectedGraph): The directed graph
+
+        Returns:
+            DirectedGraph: The reversed graph """
+
+        reversed = DirectedGraphCore()
+        for i in self.get_vertices().keys():
+            reversed.add_vertex(i)
+
+        for i in self.get_vertices().keys():
+            vertex = self.get_vertex(i)
+            for j in vertex.get_heads():
+                reversed.add_edge(j.get_label(), i)
+
+        return reversed
 
     def get_vertices_count(self) -> int:
         return len(self._vertices)

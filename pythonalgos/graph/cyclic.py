@@ -20,8 +20,6 @@ def is_cyclic(directed_graph: DirectedGraphCore, advisor: Advisor):
     Returns:
         bool: True if the directed graph contains a cycle, otherwise False """
 
-    _advisor = advisor
-
     def _is_cyclic_dfs(directed_graph: DirectedGraphCore, vertex: Vertex,
                        visited_already, in_cycle):
         """ Function that recursively searches the directed graph depth first
