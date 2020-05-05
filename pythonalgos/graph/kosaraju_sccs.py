@@ -1,10 +1,14 @@
 from .. util.logging import Logging
+from . directed_graph_core import DirectedGraphCore
+from . vertex import Vertex
+from typing import Mapping, Any, List, Set
 
 """ Module that contains the logic for kosaraju's SCCs algorithm
 """
 
 
-def create_sccs_kosaraju_dfs(directed_graph, nontrivial):
+def create_sccs_kosaraju_dfs(directed_graph: DirectedGraphCore,
+                             nontrivial: bool):
     """ Function that creates a list of strongly connected components
     according to Kosaraju's algorithm
     (https://en.wikipedia.org/wiki/Kosaraju%27s_algorithm) with a
@@ -21,7 +25,7 @@ def create_sccs_kosaraju_dfs(directed_graph, nontrivial):
     """
 
     Logging.log("\nStarting")
-    stack = []
+    stack = list()
     sccs_trivial, visited = list(), dict()
     for vertex in directed_graph.get_vertices().keys():
         if visited.get(vertex) is None:
@@ -44,7 +48,8 @@ def create_sccs_kosaraju_dfs(directed_graph, nontrivial):
         return sccs_trivial
 
 
-def filter_nontrivial(sccs_trivial, directed_graph):
+def filter_nontrivial(sccs_trivial: List[Set[int]],
+                      directed_graph: DirectedGraphCore) -> List[Set[int]]:
     """ This function filters out the trivial sccs
 
     A scc is nontrivial, iff there are at least two vertices in it,
@@ -73,14 +78,16 @@ def filter_nontrivial(sccs_trivial, directed_graph):
     return sccs_non_trivial
 
 
-def visit_dfs_sccs(directed_graph, vertex, visited, scc):
-    """ Function that performs a recursive depth first search on the directed graph
-    to check whether vertices have been visisted
+def visit_dfs_sccs(directed_graph: DirectedGraphCore, vertex: str,
+                   visited: Mapping[bool, Vertex], scc: Set[int]):
+    """ Function that performs a recursive depth first search on the directed
+    graph to check whether vertices have been visisted
 
     Args:
         directed_graph(DirectedGraph): The directed graph
         vertex (label): The current vertex
-        visited (dict): A dictionary that maintains whether vertices have been visisted
+        visited (dict): A dictionary that maintains whether vertices have been
+                        visited
         scc (set): The current scc being constructed
 
     """
@@ -92,22 +99,25 @@ def visit_dfs_sccs(directed_graph, vertex, visited, scc):
             visit_dfs_sccs(directed_graph, head.get_label(), visited, scc)
 
 
-def fill_order_dfd_sccs(directed_graph, vertex, visited, stack):
+def fill_order_dfd_sccs(directed_graph: DirectedGraphCore, vertex: str,
+                        visited: Mapping[Vertex, bool], stack: List):
     """ Function that covers the first part of the algorith by determining
     the order of vertices, traversing the graph with a depth first search,
     recursively.
 
     Args:
         directed_graph (DirectedGraph): The directed graph
-        vertex: The current vertex
-        visited (dict): A dictionary that maintains whether vertices have been visisted
+        vertex(str): The current vertex
+        visited (dict): A dictionary that maintains whether vertices have
+        been visited
         stack (list): stack that will be processed, used to inverse the order
 
     """
+    # TODO Doesn't work, not needed?
 
     visited[vertex] = True
     for head in directed_graph.get_vertices()[vertex].get_heads():
         if visited.get(head.get_label()) is None:
             fill_order_dfd_sccs(directed_graph, head.get_label(), visited,
                                 stack)
-    stack = stack.append(vertex)
+    stack.append(vertex)

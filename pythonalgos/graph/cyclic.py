@@ -5,9 +5,11 @@ Calls to advice insertions are included at join-points. These calls belong to a
 abstract class Advisor, which must be implemented by interested parties """
 
 from .. util.advisor import Advisor
+from . directed_graph_core import DirectedGraphCore
+from . vertex import Vertex
 
 
-def is_cyclic(directed_graph, advisor: Advisor):
+def is_cyclic(directed_graph: DirectedGraphCore, advisor: Advisor):
     """ Function that checks whether a directed graph contains a cycle or not
 
     Args:
@@ -20,7 +22,8 @@ def is_cyclic(directed_graph, advisor: Advisor):
 
     _advisor = advisor
 
-    def _is_cyclic_dfs(directed_graph, vertex, visited_already, in_cycle):
+    def _is_cyclic_dfs(directed_graph: DirectedGraphCore, vertex: Vertex,
+                       visited_already, in_cycle):
         """ Function that recursively searches the directed graph depth first
         and checks if a vertex was already in_cycle before.
 
@@ -31,7 +34,7 @@ def is_cyclic(directed_graph, advisor: Advisor):
         present
 
         Args:
-            directed_graph (DirectedGraph): The directed graph
+            directed_graph (DirectedGraphCore): The directed graph
             vertex(Vertex): The current vertex
             visited_already (dict): A dictionary that maintains whether
                 vertices have been traversed already. It's a performance
@@ -68,12 +71,12 @@ def is_cyclic(directed_graph, advisor: Advisor):
         in_cycle[vertex.get_label()] = False
         return False
 
-    def _is_cyclic_inner(directed_graph):
+    def _is_cyclic_inner(directed_graph: DirectedGraphCore):
         """ Main function that loops through the vertices and starts
         the traversal for each vertex.
 
         Args:
-            directed_graph (DirectedGraph): The directed graph """
+            directed_graph (DirectedGraphCore): The directed graph """
 
         visited_already = dict()
         in_cycle = {i: False for i in directed_graph.get_vertices().keys()}

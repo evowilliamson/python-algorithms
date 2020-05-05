@@ -1,3 +1,5 @@
+from typing import Mapping, Any
+
 """ Module that contains the definition of the class that represents an edge in
 a directed graph
 """
@@ -11,7 +13,7 @@ class Edge(object):
     For example, a weighted graph would have a necessity to put a weight to
     each edge."""
 
-    def __init__(self, tail, head, **attrs):
+    def __init__(self, tail, head, **attrs: Mapping[str, str]):
         """ Initialises the edge.
 
         Args:
@@ -31,8 +33,8 @@ class Edge(object):
     def get_head(self):
         return self._head
 
-    def set_attr(self, attr, value):
+    def set_attr(self, attr: str, value: Any):
         self._attrs[attr] = value
 
-    def get_attr(self, attr):
+    def get_attr(self, attr: str) -> Any:
         return self._attrs.get(attr)

@@ -1,5 +1,5 @@
-""" Module that contains test for the cyckic checking functionality of the  directed graph
-"""
+""" Module that contains test for the cyckic checking functionality of the
+directed graph """
 
 import unittest
 from pythonalgos.graph.directed_graph import DirectedGraph

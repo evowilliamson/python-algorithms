@@ -1,17 +1,20 @@
-""" Module that contains a main function that trails the directe graph.
+""" Module that contains a main function that trails the directed graph.
 
-A directed trail is a walk where edges are not repeated. Edges are traversed in a certain
-order, which is dictated by the data structure that holds the edges.
+A directed trail is a walk where edges are not repeated. Edges are traversed
+in a certain order, which is dictated by the data structure that holds the
+edges.
 
-Calls to advice insertions are included at joi -points. These calls belong to a
+Calls to advice insertions are included at join-points. These calls belong to a
 abstract class Advisor, which must be implemented by interested parties
 
 """
 
 from .. util.advisor import Advisor
+from . directed_graph_core import DirectedGraphCore
+from . vertex import Vertex
 
 
-def trail(directed_graph, advisor: Advisor):
+def trail(directed_graph: DirectedGraphCore, advisor: Advisor):
     """ Main function that walks the directed graph, restricted by the trail
      feature (no edge repetitions)
 
@@ -30,7 +33,7 @@ def trail(directed_graph, advisor: Advisor):
         else:
             return False
 
-    def _trail_dfs(directed_graph, vertex):
+    def _trail_dfs(directed_graphP: DirectedGraphCore, vertex: Vertex):
         """ Function that recursively walks the directed graph
 
         Args:

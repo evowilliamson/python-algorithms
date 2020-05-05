@@ -2,6 +2,7 @@
 """
 
 from pythonalgos.graph.directed_graph import DirectedGraph
+from typing import Any, List, Mapping
 
 
 class DirectedAcyclicGraph(DirectedGraph):
@@ -10,7 +11,7 @@ class DirectedAcyclicGraph(DirectedGraph):
     whether the graph adheres to the fact that the graph doesn't contain a
     cycle """
 
-    def __init__(self, vertices):
+    def __init__(self, vertices: Mapping[Any, List[Any]]):
         """ Initializer that calls the super() initializer and then performs
         the cyclic test to check whether it is a directed acyclic graph """
 
