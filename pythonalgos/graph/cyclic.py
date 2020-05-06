@@ -7,6 +7,7 @@ abstract class Advisor, which must be implemented by interested parties """
 from .. util.advisor import Advisor
 from . directed_graph_core import DirectedGraphCore
 from . vertex import Vertex
+from typing import Set, MutableMapping
 
 
 def is_cyclic(directed_graph: DirectedGraphCore, advisor: Advisor):
@@ -21,7 +22,8 @@ def is_cyclic(directed_graph: DirectedGraphCore, advisor: Advisor):
         bool: True if the directed graph contains a cycle, otherwise False """
 
     def _is_cyclic_dfs(directed_graph: DirectedGraphCore, vertex: Vertex,
-                       visited_already, in_cycle):
+                       visited_already: MutableMapping[Vertex, bool],
+                       in_cycle: MutableMapping[Vertex, bool]):
         """ Function that recursively searches the directed graph depth first
         and checks if a vertex was already in_cycle before.
 
@@ -45,12 +47,12 @@ def is_cyclic(directed_graph: DirectedGraphCore, advisor: Advisor):
         Returns:
             bool: True if the vertex was in_cycle before, False otherwise """
 
-        visited_already[vertex.get_label()] = True
-        in_cycle[vertex.get_label()] = True
+        visited_already[vertex] = True
+        in_cycle[vertex] = True
         advisor.advise("visit_vertex", directed_graph, vertex)
 
         for edge in vertex.get_edges():
-            if visited_already.get(edge.get_head().get_label()) is None:
+            if visited_already.get(edge.get_head()) is None:
                 if _is_cyclic_dfs(directed_graph, edge.get_head(),
                                   visited_already, in_cycle):
                     advisor.advise("cycle_reported_recursive", directed_graph,
@@ -59,14 +61,14 @@ def is_cyclic(directed_graph: DirectedGraphCore, advisor: Advisor):
                 else:
                     advisor.advise("no_cycle_reported_recursive",
                                    directed_graph, vertex)
-            elif in_cycle[edge.get_head().get_label()]:
+            elif in_cycle[edge.get_head()]:
                 advisor.advise("cycle_found", directed_graph, vertex,
                                edge.get_head())
                 return True
             elif visited_already.get(edge.get_head().get_label()):
                 advisor.advise("vertex_already_visited", directed_graph, edge)
 
-        in_cycle[vertex.get_label()] = False
+        in_cycle[vertex] = False
         return False
 
     def _is_cyclic_inner(directed_graph: DirectedGraphCore):
@@ -76,10 +78,11 @@ def is_cyclic(directed_graph: DirectedGraphCore, advisor: Advisor):
         Args:
             directed_graph (DirectedGraphCore): The directed graph """
 
-        visited_already = dict()
-        in_cycle = {i: False for i in directed_graph.get_vertices().keys()}
-        for label, vertex in directed_graph.get_vertices().items():
-            if visited_already.get(label) is None:
+        visited_already: MutableMapping[Vertex, bool] = dict()
+        in_cycle: MutableMapping[Vertex, bool] = {
+            vertex: False for vertex in directed_graph.get_vertices()}
+        for vertex in directed_graph.get_vertices():
+            if vertex not in visited_already:
                 if _is_cyclic_dfs(directed_graph, vertex, visited_already,
                                   in_cycle):
                     return True

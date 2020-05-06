@@ -86,7 +86,8 @@ class DirectedGraph(object):
     def __str__(self):
         return self.directed_graph.__str__()
 
-    def create_sccs_kosaraju_dfs(self, nontrivial: bool = True):
+    def create_sccs_kosaraju_dfs(
+            self, nontrivial: bool = True) -> List[Set[Vertex]]:
         return kosaraju_sccs.create_sccs_kosaraju_dfs(self.directed_graph,
                                                       nontrivial)
 

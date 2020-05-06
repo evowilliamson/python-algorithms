@@ -8,7 +8,7 @@ from typing import Dict, Any, List, MutableMapping, Set
 
 
 def create_sccs_kosaraju_dfs(directed_graph: DirectedGraphCore,
-                             nontrivial: bool):
+                             nontrivial: bool) -> List[Set[Vertex]]:
     """ Function that creates a list of strongly connected components
     according to Kosaraju's algorithm
     (https://en.wikipedia.org/wiki/Kosaraju%27s_algorithm) with a
@@ -91,7 +91,7 @@ def visit_dfs_sccs(directed_graph: DirectedGraphCore, vertex: Vertex,
 
     visited[vertex] = True
     scc.add(vertex)
-    for head in directed_graph.get_vertices()[vertex].get_heads():
+    for head in vertex.get_heads():
         if visited.get(head) is None:
             visit_dfs_sccs(directed_graph, head, visited, scc)
 
@@ -113,7 +113,7 @@ def fill_order_dfd_sccs(directed_graph: DirectedGraphCore, vertex: Vertex,
     """
 
     visited[vertex] = True
-    for head in directed_graph.get_vertices()[vertex].get_heads():
+    for head in vertex.get_heads():
         if visited.get(head) is None:
             fill_order_dfd_sccs(directed_graph, head, visited, stack)
     stack.append(vertex)
