@@ -18,13 +18,29 @@ class DirectedGraphCore(object):
             vertices(dict): a dict with the vertices and their tails in it
         """
 
-        self._vertices = dict()
+        self._vertices: Set[Vertex] = set()
         if vertices is not None:
             for label in vertices.keys():
                 self.add_vertex(label)
             for label, heads in vertices.items():
                 for head in heads:
-                    self.add_edge(label, head)
+                    self.add_edge(self.get_vertex(label),
+                                  self.get_vertex(head))
+
+    def get_vertex(self, label: Any):
+        """ Returns the vertex that coincides with the label
+
+        Args:
+            label: the label of the vertex
+
+        Returns:
+            The vertex object
+        """
+        for vertex in self._vertices:
+            if vertex.get_label() == label:
+                return vertex
+
+        raise RuntimeError(f"label {label} couldn't be found in vertices")
 
     def copy(self) -> DirectedGraphCore:
         """ Copies the directed graph and returns it
@@ -40,31 +56,23 @@ class DirectedGraphCore(object):
         Args:
             label: a vertex represented by its label """
 
-        if label in self._vertices:
-            raise RuntimeError("vertex = '{}'".format(label) +
-                               " is already a vertex in this directed graph")
-        self._vertices[label] = Vertex(label)
+        for vertex in self._vertices:
+            if vertex.get_label() == label:
+                raise RuntimeError(
+                    f"Vertex = {label} is already a vertex in this directed " +
+                    " graph")
 
-    def get_vertex(self, label: Any) -> Vertex:
-        """ Returns the vertex that coincides with the label
+        self._vertices.add(Vertex(label))
 
-        Args:
-            label: a vertex represented by its label
-
-        Returns:
-            Vertex: the requested vertex """
-
-        return self._vertices[label]
-
-    def get_vertices(self) -> Mapping[Any, Vertex]:
-        """ Returns the vertices dictionary
+    def get_vertices(self) -> Set[Vertex]:
+        """ Returns the vertices set
 
         Returns
-            self._vertices (dict) """
+            self._vertices """
 
         return self._vertices
 
-    def add_edge(self, tail: Any, head: Any):
+    def add_edge(self, tail: Vertex, head: Vertex):
         """ Adds an edge to the graph, the edge is identified by a tail and
         a head vertex.
 
@@ -72,13 +80,8 @@ class DirectedGraphCore(object):
             tail: the edge that represents the start vertex
             head: the edge that represents the destination vertex """
 
-        if tail not in self._vertices or head not in self._vertices:
-            raise RuntimeError("Destination or source of edge ('{}'"
-                               .format(tail) + ",'{}'".format(head) +
-                               ") cannot be found as a vertex")
-        else:
-            self._vertices[tail].add_edge(self._vertices[head])
-            self._vertices[head].increase_indegree()
+        tail.add_edge(head)
+        head.increase_indegree()
 
     def get_all_edges(self) -> Set[Edge]:
         """ Method that retrieves all edges of all vertices
@@ -86,7 +89,7 @@ class DirectedGraphCore(object):
         Returns:
             set(): A set of all edges in the directed graph """
 
-        return {e for v in self._vertices.values() for e in v.get_edges()}
+        return {e for v in self._vertices for e in v.get_edges()}
 
     def get_reversed_graph(self) -> DirectedGraphCore:
         """ Function that returns the reverse of this graph
@@ -98,13 +101,12 @@ class DirectedGraphCore(object):
             DirectedGraph: The reversed graph """
 
         reversed = DirectedGraphCore()
-        for i in self.get_vertices().keys():
-            reversed.add_vertex(i)
+        for i in self.get_vertices():
+            reversed.add_vertex(i.get_label())
 
-        for i in self.get_vertices().keys():
-            vertex = self.get_vertex(i)
-            for j in vertex.get_heads():
-                reversed.add_edge(j.get_label(), i)
+        for tail in self.get_vertices():
+            for head in tail.get_heads():
+                reversed.add_edge(tail, head)
 
         return reversed
 
@@ -113,7 +115,7 @@ class DirectedGraphCore(object):
 
     def __str__(self):
         res = ""
-        for label in self._vertices:
-            res += "\n" + str(label) + ": " + str(self._vertices[label])
+        for vertex in self._vertices:
+            res += "\n" + str(vertex)
 
         return res

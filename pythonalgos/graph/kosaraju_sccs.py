@@ -1,3 +1,4 @@
+from pythonalgos.graph.vertex import Vertex
 from .. util.logging import Logging
 from . directed_graph_core import DirectedGraphCore
 from typing import Dict, Any, List, MutableMapping, Set
@@ -24,31 +25,29 @@ def create_sccs_kosaraju_dfs(directed_graph: DirectedGraphCore,
     """
 
     Logging.log("\nStarting")
-    stack = list()
-    sccs_trivial, visited = list(), dict()
-    for vertex in directed_graph.get_vertices().keys():
+    stack: List[Vertex] = list()
+    sccs_trivial: List[Set[Vertex]] = list()
+    visited: MutableMapping[Vertex, bool] = dict()
+    for vertex in directed_graph.get_vertices():
         if visited.get(vertex) is None:
             Logging.log("Vertex {0} not visited, go deep", vertex)
             fill_order_dfd_sccs(directed_graph, vertex, visited, stack)
         else:
             Logging.log("Vertex {0} already visited, skipping", vertex)
 
-    reversed_graph = directed_graph.get_reversed_graph()
-
     visited = dict()
     for i in reversed(stack):
         if visited.get(i) is None:
             sccs_trivial.append(set())
-            visit_dfs_sccs(reversed_graph, i, visited, sccs_trivial[-1])
+            visit_dfs_sccs(directed_graph.get_reversed_graph(), i, visited,
+                           sccs_trivial[-1])
 
-    if nontrivial:
-        return filter_nontrivial(sccs_trivial, directed_graph)
-    else:
-        return sccs_trivial
+    return filter_nontrivial(sccs_trivial, directed_graph) \
+        if nontrivial else sccs_trivial
 
 
-def filter_nontrivial(sccs_trivial: List[Set[int]],
-                      directed_graph: DirectedGraphCore) -> List[Set[int]]:
+def filter_nontrivial(sccs_trivial: List[Set[Vertex]],
+                      directed_graph: DirectedGraphCore) -> List[Set[Vertex]]:
     """ This function filters out the trivial sccs
 
     A scc is nontrivial, iff there are at least two vertices in it,
@@ -62,23 +61,22 @@ def filter_nontrivial(sccs_trivial: List[Set[int]],
 
     Returns:
         sccs_nontrivial(list): The list of nontrivial sccs
-
     """
 
     sccs_non_trivial = list()
     for scc in sccs_trivial:
-        vertex = directed_graph.get_vertex(list(scc)[0])
-        if (len(scc) >= 2) or \
+        vertex = next(iter(scc))
+        if len(scc) >= 2 or \
             (len(scc) == 1 and vertex.get_indegree() == 1 and
-                vertex.get_outdegree() == 1) and \
-                list(vertex.get_heads())[0] == list(scc)[0]:
+                vertex.get_outdegree() == 1 and
+                vertex.get_heads()[0] == vertex):
             sccs_non_trivial.append(scc)
 
     return sccs_non_trivial
 
 
-def visit_dfs_sccs(directed_graph: DirectedGraphCore, vertex: str,
-                   visited: MutableMapping[Any, bool], scc: Set[Any]):
+def visit_dfs_sccs(directed_graph: DirectedGraphCore, vertex: Vertex,
+                   visited: MutableMapping[Any, bool], scc: Set[Vertex]):
     """ Function that performs a recursive depth first search on the directed
     graph to check whether vertices have been visisted
 
@@ -94,12 +92,13 @@ def visit_dfs_sccs(directed_graph: DirectedGraphCore, vertex: str,
     visited[vertex] = True
     scc.add(vertex)
     for head in directed_graph.get_vertices()[vertex].get_heads():
-        if visited.get(head.get_label()) is None:
-            visit_dfs_sccs(directed_graph, head.get_label(), visited, scc)
+        if visited.get(head) is None:
+            visit_dfs_sccs(directed_graph, head, visited, scc)
 
 
-def fill_order_dfd_sccs(directed_graph: DirectedGraphCore, vertex: str,
-                        visited: MutableMapping[Any, bool], stack: List):
+def fill_order_dfd_sccs(directed_graph: DirectedGraphCore, vertex: Vertex,
+                        visited: MutableMapping[Vertex, bool],
+                        stack: List[Vertex]):
     """ Function that covers the first part of the algorith by determining
     the order of vertices, traversing the graph with a depth first search,
     recursively.
@@ -112,11 +111,10 @@ def fill_order_dfd_sccs(directed_graph: DirectedGraphCore, vertex: str,
         stack (list): stack that will be processed, used to inverse the order
 
     """
-    # TODO Doesn't work, not needed?
 
     visited[vertex] = True
     for head in directed_graph.get_vertices()[vertex].get_heads():
-        if visited.get(head.get_label()) is None:
-            fill_order_dfd_sccs(directed_graph, head.get_label(), visited,
-                                stack)
+        if visited.get(head) is None:
+            fill_order_dfd_sccs(directed_graph, head, visited, stack)
     stack.append(vertex)
+    # TODO Doesn't work, not needed?

@@ -34,6 +34,18 @@ class DirectedGraph(object):
 
         return deepcopy(self)
 
+    def get_vertex(self, label: Any):
+        """ Returns the vertex that coincides with the label
+
+        Args:
+            label: the label of the vertex
+
+        Returns:
+            The vertex object
+        """
+
+        return self.directed_graph.get_vertex(label)
+
     def add_vertex(self, label: Any):
         """ Adds a vertex to the dictionary of vertices
 
@@ -42,18 +54,7 @@ class DirectedGraph(object):
 
         self.directed_graph.add_vertex(label)
 
-    def get_vertex(self, label: Any) -> Vertex:
-        """ Returns the vertex that coincides with the label
-
-        Args:
-            label: a vertex represented by its label
-
-        Returns:
-            Vertex: the requested vertex """
-
-        return self.directed_graph.get_vertex(label)
-
-    def get_vertices(self) -> Mapping[Any, Vertex]:
+    def get_vertices(self) -> Set[Vertex]:
         """ Returns the vertices dictionary
 
         Returns
