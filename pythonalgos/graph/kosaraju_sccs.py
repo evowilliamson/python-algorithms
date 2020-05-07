@@ -26,7 +26,7 @@ def create_sccs_kosaraju_dfs(directed_graph: DirectedGraphCore,
 
     Logging.log("\nStarting")
     stack: List[Vertex] = list()
-    sccs_trivial: List[Set[Vertex]] = list()
+    sccs: List[Set[Vertex]] = list()
     visited: MutableMapping[Vertex, bool] = dict()
     for vertex in directed_graph.get_vertices():
         if visited.get(vertex) is None:
@@ -36,14 +36,15 @@ def create_sccs_kosaraju_dfs(directed_graph: DirectedGraphCore,
             Logging.log("Vertex {0} already visited, skipping", vertex)
 
     visited = dict()
-    for i in reversed(stack):
+    reversed_graph = directed_graph.get_reversed_graph()
+    for i in stack:
         if visited.get(i) is None:
-            sccs_trivial.append(set())
-            visit_dfs_sccs(directed_graph.get_reversed_graph(), i, visited,
-                           sccs_trivial[-1])
+            sccs.append(set())
+            visit_dfs_sccs(reversed_graph, i, visited,
+                           sccs[-1])
 
-    return filter_nontrivial(sccs_trivial, directed_graph) \
-        if nontrivial else sccs_trivial
+    return filter_nontrivial(sccs, directed_graph) \
+        if nontrivial else sccs
 
 
 def filter_nontrivial(sccs_trivial: List[Set[Vertex]],
@@ -56,7 +57,7 @@ def filter_nontrivial(sccs_trivial: List[Set[Vertex]],
     to the head
 
     Args:
-        sccs_trivial(list): The list of trivial sccs
+        sccs(list): The list of trivial sccs
         directed_graph(DirectedGraph): The directed graph
 
     Returns:

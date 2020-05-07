@@ -21,7 +21,7 @@ class DirectedGraphCore(object):
         self._vertices: Set[Vertex] = set()
         if vertices is not None:
             for label in vertices.keys():
-                self.add_vertex(label)
+                self.create_add_vertex(label)
             for label, heads in vertices.items():
                 for head in heads:
                     self.add_edge(self.get_vertex(label),
@@ -50,7 +50,7 @@ class DirectedGraphCore(object):
 
         return deepcopy(self)
 
-    def add_vertex(self, label: Any):
+    def create_add_vertex(self, label: Any):
         """ Adds a vertex to the dictionary of vertices
 
         Args:
@@ -63,6 +63,15 @@ class DirectedGraphCore(object):
                     " graph")
 
         self._vertices.add(Vertex(label))
+
+    def add_vertex(self, vertex: Vertex):
+        """ Function that adds a vertex to the directed graph
+
+        Args:
+            vertex: the vertex
+        """
+
+        self._vertices.add(vertex)
 
     def get_vertices(self) -> Set[Vertex]:
         """ Returns the vertices set
@@ -101,12 +110,14 @@ class DirectedGraphCore(object):
             DirectedGraph: The reversed graph """
 
         reversed = DirectedGraphCore()
-        for i in self.get_vertices():
-            reversed.add_vertex(i.get_label())
+        for vertex in self._vertices:
+            reversed.create_add_vertex(vertex.get_label())
 
         for tail in self.get_vertices():
             for head in tail.get_heads():
-                reversed.add_edge(tail, head)
+                reversed.add_edge(
+                    reversed.get_vertex(head.get_label()),
+                    reversed.get_vertex(tail.get_label()))
 
         return reversed
 

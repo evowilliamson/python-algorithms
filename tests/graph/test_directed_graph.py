@@ -1,13 +1,10 @@
 """ Module that contains test for the main directed graph functionality
 """
 
+from pythonalgos.graph.directed_graph_core import DirectedGraphCore
 import unittest
 from pythonalgos.graph.directed_graph import DirectedGraph
-import os
-import time
-from pythonalgos.util.logging import Logging
-from pythonalgos.util import path_tools as pt
-from os import path
+from typing import Union
 
 
 class TestDirectedGraph(unittest.TestCase):
@@ -65,8 +62,47 @@ class TestDirectedGraph(unittest.TestCase):
         vertex = self.directed_graph.get_vertex(vertex_to_test)
         self.assertEqual(vertex.get_indegree(), 2)
 
+    def test_get_reversed_graph(self):
+        self.vertices = {0: [1], 1: [2, 3], 2: [3],
+                         3: [4, 6], 4: [5, 6], 5: [5], 6: [6]}
+        self.directed_graph = DirectedGraph(self.vertices)
+        reversed = self.directed_graph.get_reversed_graph()
+        self.assertTrue(self.amount_of_tails(reversed, 6) == 3)
+        self.assertTrue(self.has_vertex_label_as_head(reversed, 6, 4))
+        self.assertTrue(self.has_vertex_label_as_head(reversed, 6, 6))
+        self.assertTrue(self.has_vertex_label_as_head(reversed, 6, 3))
+        self.assertTrue(self.amount_of_tails(reversed, 5) == 2)
+        self.assertTrue(self.has_vertex_label_as_head(reversed, 5, 5))
+        self.assertTrue(self.has_vertex_label_as_head(reversed, 5, 4))
+        self.assertTrue(self.amount_of_tails(reversed, 4) == 1)
+        self.assertTrue(self.has_vertex_label_as_head(reversed, 4, 3))
+        self.assertTrue(self.amount_of_tails(reversed, 3) == 2)
+        self.assertTrue(self.has_vertex_label_as_head(reversed, 3, 1))
+        self.assertTrue(self.has_vertex_label_as_head(reversed, 3, 2))
+        self.assertTrue(self.amount_of_tails(reversed, 2) == 1)
+        self.assertTrue(self.has_vertex_label_as_head(reversed, 2, 1))
+        self.assertTrue(self.amount_of_tails(reversed, 1) == 1)
+        self.assertTrue(self.has_vertex_label_as_head(reversed, 1, 0))
+        self.assertTrue(self.amount_of_tails(reversed, 0) == 0)
+
     def tearDown(self):
         pass
+
+    def has_vertex_label_as_head(
+            self,
+            graph: DirectedGraphCore,
+            vertex_label: Union[str, int],
+            head_label: Union[str, int]) -> bool:
+        return True if head_label in \
+            {v.get_label() for v in
+                graph.get_vertex(vertex_label).get_heads()} \
+            else False
+
+    def amount_of_tails(
+            self,
+            graph: DirectedGraphCore,
+            vertex_label: Union[str, int]) -> int:
+        return len(graph.get_vertex(vertex_label).get_heads())
 
 
 if __name__ == '__main__':

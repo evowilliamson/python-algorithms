@@ -52,7 +52,7 @@ class DirectedGraph(object):
         Args:
             label: a vertex represented by its label """
 
-        self.directed_graph.add_vertex(label)
+        self.directed_graph.create_add_vertex(label)
 
     def get_vertices(self) -> Set[Vertex]:
         """ Returns the vertices dictionary
@@ -111,3 +111,6 @@ class DirectedGraph(object):
             empty """
 
         return trail.trail(self.directed_graph, advisor)
+
+    def get_reversed_graph(self) -> DirectedGraphCore:
+        return self.directed_graph.get_reversed_graph()

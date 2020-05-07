@@ -63,6 +63,9 @@ class Vertex():
     def get_edges(self) -> List[Edge]:
         return self._edges
 
+    def remove_edges(self):
+        self._edges = []
+
     def get_indegree(self) -> int:
         return self._indegree
 
