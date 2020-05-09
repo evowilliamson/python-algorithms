@@ -64,7 +64,7 @@ class Vertex():
         return self._edges
 
     def remove_edges(self):
-        self._edges = []
+        self._edges = list()
 
     def get_indegree(self) -> int:
         return self._indegree
@@ -73,7 +73,7 @@ class Vertex():
         return len(self._edges)
 
     def __str__(self):
-        return "outdegree: {}".format(self.get_outdegree()) + \
+        return str(self.get_label()) + ", outdegree: {}".format(self.get_outdegree()) + \
                ", indegree: {}".format(self.get_indegree()) + \
                ", heads: " + ",".join([str(tail.get_label())
                                       for tail in self.get_heads()])

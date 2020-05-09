@@ -121,6 +121,25 @@ class DirectedGraphCore(object):
 
         return reversed
 
+    def reverse(self):
+        """ Function that returns the reverse of this graph
+
+        Args:
+            directed_graph (DirectedGraph): The directed graph
+
+        Returns:
+            DirectedGraph: The reversed graph """
+
+        edges: List[Edge] = list()
+        for vertex in self._vertices:
+            edges.extend(vertex.get_edges())
+            vertex.remove_edges()
+
+        for edge in edges:
+            edge.reverse()
+            edge.get_tail().add_edge(edge)
+            a = 100
+
     def get_vertices_count(self) -> int:
         return len(self._vertices)
 

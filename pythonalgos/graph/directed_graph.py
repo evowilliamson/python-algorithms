@@ -114,3 +114,7 @@ class DirectedGraph(object):
 
     def get_reversed_graph(self) -> DirectedGraphCore:
         return self.directed_graph.get_reversed_graph()
+
+    def reverse(self):
+        self.directed_graph.reverse()
+

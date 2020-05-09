@@ -33,8 +33,17 @@ class Edge(object):
     def get_head(self):
         return self._head
 
+    def set_tail(self, tail):
+        self.tail = tail
+
+    def set_head(self, head):
+        self.head = head
+
     def set_attr(self, attr: str, value: Any):
         self._attrs[attr] = value
+
+    def reverse(self):
+        self._tail, self._head = self._head, self._tail
 
     def get_attr(self, attr: str) -> Any:
         return self._attrs.get(attr)
