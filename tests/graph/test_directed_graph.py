@@ -64,59 +64,54 @@ class TestDirectedGraph(unittest.TestCase):
 
     def test_get_reversed_graph(self):
         self.directed_graph = DirectedGraph(self.vertices)
-        reversed = self.directed_graph.get_reversed_graph()
-        self.assertTrue(self.amount_of_heads(reversed, 6) == 3)
-        self.assertTrue(self.has_vertex_label_as_head(reversed, 6, 4))
-        self.assertTrue(self.has_vertex_label_as_head(reversed, 6, 6))
-        self.assertTrue(self.has_vertex_label_as_head(reversed, 6, 3))
-        self.assertTrue(self.amount_of_heads(reversed, 5) == 2)
-        self.assertTrue(self.has_vertex_label_as_head(reversed, 5, 5))
-        self.assertTrue(self.has_vertex_label_as_head(reversed, 5, 4))
-        self.assertTrue(self.amount_of_heads(reversed, 4) == 1)
-        self.assertTrue(self.has_vertex_label_as_head(reversed, 4, 3))
-        self.assertTrue(self.amount_of_heads(reversed, 3) == 2)
-        self.assertTrue(self.has_vertex_label_as_head(reversed, 3, 1))
-        self.assertTrue(self.has_vertex_label_as_head(reversed, 3, 2))
-        self.assertTrue(self.amount_of_heads(reversed, 2) == 1)
-        self.assertTrue(self.has_vertex_label_as_head(reversed, 2, 1))
-        self.assertTrue(self.amount_of_heads(reversed, 1) == 1)
-        self.assertTrue(self.has_vertex_label_as_head(reversed, 1, 0))
-        self.assertTrue(self.amount_of_heads(reversed, 0) == 0)
+        self.directed_graph.reversed(inplace=True)
+        self.check_big_reversed_graph(self.directed_graph)
 
-    def test_get_reversed_graph2(self):
-        self.directed_graph = DirectedGraph(self.vertices)
-        self.directed_graph.reverse()
-        self.assertTrue(self.amount_of_tails2(self.directed_graph, 6) == 3)
-        self.assertTrue(self.has_vertex_label_as_head2(self.directed_graph, 6, 4))
-        self.assertTrue(self.has_vertex_label_as_head2(self.directed_graph, 6, 6))
-        self.assertTrue(self.has_vertex_label_as_head2(self.directed_graph, 6, 3))
-        self.assertTrue(self.amount_of_tails2(self.directed_graph, 5) == 2)
-        self.assertTrue(self.has_vertex_label_as_head2(self.directed_graph, 5, 5))
-        self.assertTrue(self.has_vertex_label_as_head2(self.directed_graph, 5, 4))
-        self.assertTrue(self.amount_of_tails2(self.directed_graph, 4) == 1)
-        self.assertTrue(self.has_vertex_label_as_head2(self.directed_graph, 4, 3))
-        self.assertTrue(self.amount_of_tails2(self.directed_graph, 3) == 2)
-        self.assertTrue(self.has_vertex_label_as_head2(self.directed_graph, 3, 1))
-        self.assertTrue(self.has_vertex_label_as_head2(self.directed_graph, 3, 2))
-        self.assertTrue(self.amount_of_tails2(self.directed_graph, 2) == 1)
-        self.assertTrue(self.has_vertex_label_as_head2(self.directed_graph, 2, 1))
-        self.assertTrue(self.amount_of_tails2(self.directed_graph, 1) == 1)
-        self.assertTrue(self.has_vertex_label_as_head2(self.directed_graph, 1, 0))
-        self.assertTrue(self.amount_of_tails2(self.directed_graph, 0) == 0)
-
-    def test_get_reversed_small_graph(self):
+    def test_get_reversed_small_graph_inplace_false(self):
         self.vertices = {0: [1], 1: [2], 2: []}
         self.directed_graph = DirectedGraph(self.vertices)
-        self.directed_graph.reverse()
-        self.assertTrue(self.amount_of_tails2(self.directed_graph, 2) == 1)
-        self.assertTrue(self.has_vertex_label_as_head2(self.directed_graph, 2, 1))
-        self.assertTrue(self.amount_of_tails2(self.directed_graph, 1) == 1)
-        self.assertTrue(self.has_vertex_label_as_head2(self.directed_graph, 1, 0))
-        self.assertTrue(self.amount_of_tails2(self.directed_graph, 1) == 1)
-        self.assertTrue(self.has_vertex_label_as_head2(self.directed_graph, 1, 0))
+        reversed_graph = self.directed_graph.reversed(inplace=False)
+        self.assertTrue(reversed_graph !=
+                        self.directed_graph.get_direct_graph_core())
+        self.check_small_reversed_graph(reversed_graph)
+
+    def test_get_reversed_small_graph_inplace_true(self):
+        self.vertices = {0: [1], 1: [2], 2: []}
+        self.directed_graph = DirectedGraph(self.vertices)
+        reversed_graph = self.directed_graph.reversed(inplace=True)
+        self.assertTrue(reversed_graph ==
+                        self.directed_graph.get_direct_graph_core())
+        self.check_small_reversed_graph(reversed_graph)
 
     def tearDown(self):
         pass
+
+    def check_small_reversed_graph(self, reversed_graph):
+        self.assertTrue(self.amount_of_tails2(reversed_graph, 2) == 1)
+        self.assertTrue(self.has_vertex_label_as_head2(reversed_graph, 2, 1))
+        self.assertTrue(self.amount_of_tails2(reversed_graph, 1) == 1)
+        self.assertTrue(self.has_vertex_label_as_head2(reversed_graph, 1, 0))
+        self.assertTrue(self.amount_of_tails2(reversed_graph, 0) == 0)
+
+    def check_big_reversed_graph(self, reversed_graph):
+        self.assertTrue(self.amount_of_tails2(reversed_graph, 6) == 3)
+        self.assertTrue(self.has_vertex_label_as_head2(reversed_graph, 6, 4))
+        self.assertTrue(self.has_vertex_label_as_head2(reversed_graph, 6, 6))
+        self.assertTrue(self.has_vertex_label_as_head2(reversed_graph, 6, 3))
+        self.assertTrue(self.amount_of_tails2(reversed_graph, 5) == 2)
+        self.assertTrue(self.has_vertex_label_as_head2(reversed_graph, 5, 5))
+        self.assertTrue(self.has_vertex_label_as_head2(reversed_graph, 5, 4))
+        self.assertTrue(self.amount_of_tails2(reversed_graph, 4) == 1)
+        self.assertTrue(self.has_vertex_label_as_head2(reversed_graph, 4, 3))
+        self.assertTrue(self.amount_of_tails2(reversed_graph, 3) == 2)
+        self.assertTrue(self.has_vertex_label_as_head2(reversed_graph, 3, 1))
+        self.assertTrue(self.has_vertex_label_as_head2(reversed_graph, 3, 2))
+        self.assertTrue(self.amount_of_tails2(reversed_graph, 2) == 1)
+        self.assertTrue(self.has_vertex_label_as_head2(reversed_graph, 2, 1))
+        self.assertTrue(self.amount_of_tails2(reversed_graph, 1) == 1)
+        self.assertTrue(self.has_vertex_label_as_head2(reversed_graph, 1, 0))
+        self.assertTrue(self.amount_of_tails2(reversed_graph, 0) == 0)
+
 
     def has_vertex_label_as_head(
             self,

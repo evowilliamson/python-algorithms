@@ -121,24 +121,31 @@ class DirectedGraphCore(object):
 
         return reversed
 
-    def reverse(self):
-        """ Function that returns the reverse of this graph
+    def reversed(self, inplace: bool = True) -> DirectedGraphCore:
+        """ Function that calculates the transposed graph
 
         Args:
-            directed_graph (DirectedGraph): The directed graph
+            inplace: if true, then changes the object is self, 
+                if false, returns a copy
 
         Returns:
             DirectedGraph: The reversed graph """
 
+        graph: DirectedGraphCore = self
+        if not inplace:
+            graph = self.copy()
+
         edges: List[Edge] = list()
-        for vertex in self._vertices:
+        for vertex in graph._vertices:
             edges.extend(vertex.get_edges())
             vertex.remove_edges()
 
         for edge in edges:
             edge.reverse()
-            edge.get_tail().add_edge(edge)
-            a = 100
+            vertex = edge.get_tail()
+            vertex.add_edge(edge.get_head())
+
+        return graph
 
     def get_vertices_count(self) -> int:
         return len(self._vertices)
