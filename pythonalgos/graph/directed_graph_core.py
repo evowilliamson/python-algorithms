@@ -100,27 +100,6 @@ class DirectedGraphCore(object):
 
         return {e for v in self._vertices for e in v.get_edges()}
 
-    def get_reversed_graph(self) -> DirectedGraphCore:
-        """ Function that returns the reverse of this graph
-
-        Args:
-            directed_graph (DirectedGraph): The directed graph
-
-        Returns:
-            DirectedGraph: The reversed graph """
-
-        reversed = DirectedGraphCore()
-        for vertex in self._vertices:
-            reversed.create_add_vertex(vertex.get_label())
-
-        for tail in self.get_vertices():
-            for head in tail.get_heads():
-                reversed.add_edge(
-                    reversed.get_vertex(head.get_label()),
-                    reversed.get_vertex(tail.get_label()))
-
-        return reversed
-
     def reversed(self, inplace: bool = True) -> DirectedGraphCore:
         """ Function that calculates the transposed graph
 
@@ -142,8 +121,7 @@ class DirectedGraphCore(object):
 
         for edge in edges:
             edge.reverse()
-            vertex = edge.get_tail()
-            vertex.add_edge(edge.get_head())
+            edge.get_tail().add_edge(edge.get_head())
 
         return graph
 

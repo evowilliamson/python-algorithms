@@ -50,5 +50,5 @@ def trail(directed_graph: DirectedGraphCore, advisor: Advisor):
 
         return False
 
-    for _, vertex in directed_graph.get_vertices().items():
+    for vertex in directed_graph.get_vertices():
         _trail_dfs(vertex)

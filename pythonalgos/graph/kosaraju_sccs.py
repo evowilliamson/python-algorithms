@@ -36,14 +36,12 @@ def create_sccs_kosaraju_dfs(directed_graph: DirectedGraphCore,
             Logging.log("Vertex {0} already visited, skipping", vertex)
 
     visited = dict()
-    reversed_graph = directed_graph.get_reversed_graph()
+    directed_graph.reversed()
     for i in reversed(stack):
         if visited.get(i) is None:
-            print(str(i.get_label()))
             sccs.append(set())
-            visit_dfs_sccs(reversed_graph, i, visited,
+            visit_dfs_sccs(directed_graph, i, visited,
                            sccs[-1])
-            # print("")
 
     return filter_nontrivial(sccs, directed_graph) \
         if nontrivial else sccs
@@ -94,9 +92,7 @@ def visit_dfs_sccs(directed_graph: DirectedGraphCore, vertex: Vertex,
 
     visited[vertex] = True
     scc.add(vertex)
-    # print(vertex.get_label(), end='')
     for head in sorted(vertex.get_heads(), key=lambda vertex: vertex.get_label()):
-        # print(str(head.get_label()))
         if visited.get(head) is None:
             visit_dfs_sccs(directed_graph, head, visited, scc)
 
