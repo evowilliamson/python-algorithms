@@ -25,6 +25,13 @@ def get_user_home():
 
 
 def append_to_path(top_parent_package):
+    """ Function that searches up the folder tree and finds the top package and
+    then adds the package to sys.path
+
+    Args:
+        top_parent_package(str): The top parent package to find
+
+    """
 
     name = os.path.realpath(__file__)
     while name.split("/")[-1] != top_parent_package:
