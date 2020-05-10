@@ -1,8 +1,9 @@
 from __future__ import annotations
 from . vertex import Vertex
 from copy import deepcopy
-from typing import Set, Mapping, Any, List
+from typing import Collection, Set, Mapping, Any, List
 from . edge import Edge
+from . vertex_sort_order import VertexSortOrder
 
 """ Module that contains the definition of a directed graph as a class """
 
@@ -11,13 +12,17 @@ class DirectedGraphCore(object):
     """ Directed graph core class, it just contains the pure defintion of the
     concept, not the extra functionalities, like calculating sccs, etc.. """
 
-    def __init__(self, vertices: Mapping[Any, List[Any]] = None):
+    def __init__(self, vertices: Mapping[Any, List[Any]] = None,
+                 vertex_sorting=VertexSortOrder.RANDOM):
         """ Initialises a directed graph (with the provided vertices)
 
         Args:
             vertices(dict): a dict with the vertices and their tails in it
+            vertex_sorting: Using the VertexSortOrder definition, algorithms
+                access the vertices in the directed graph in a certain order
         """
 
+        self.vertex_sorting = vertex_sorting
         self._vertices: Set[Vertex] = set()
         if vertices is not None:
             for label in vertices.keys():
@@ -73,13 +78,22 @@ class DirectedGraphCore(object):
 
         self._vertices.add(vertex)
 
-    def get_vertices(self) -> Set[Vertex]:
+    def get_vertices(self, vertex_sorting: VertexSortOrder =
+                     VertexSortOrder.NATURAL) -> Collection[Vertex]:
         """ Returns the vertices set
 
+        Args:
+            vertex_sorting: Indicates the ordering of vertices that
+                will be used in algorithms where appropriate
         Returns
-            self._vertices """
+            self._vertices according to the indicated vertex ordering """
 
-        return self._vertices
+        if vertex_sorting == VertexSortOrder.NATURAL:
+            return self._vertices
+        else:
+            return sorted(self._vertices,
+                          key=lambda vertex: vertex.get_label(),
+                          reverse=vertex_sorting == VertexSortOrder.DESC)
 
     def add_edge(self, tail: Vertex, head: Vertex):
         """ Adds an edge to the graph, the edge is identified by a tail and
@@ -134,3 +148,6 @@ class DirectedGraphCore(object):
             res += "\n" + str(vertex)
 
         return res
+
+    def get_vertex_sorting(self) -> VertexSortOrder:
+        return self.vertex_sorting

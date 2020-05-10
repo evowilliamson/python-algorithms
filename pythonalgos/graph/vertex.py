@@ -3,6 +3,7 @@ from . edge import Edge
 from typing import List
 from typing import Mapping
 from typing import Any
+from . vertex_sort_order import VertexSortOrder
 
 """ Module that contains the definition of a vertex in the context of a
 directed graph """
@@ -60,8 +61,14 @@ class Vertex():
     def get_heads(self) -> List[Vertex]:
         return [e.get_head() for e in self._edges]
 
-    def get_edges(self) -> List[Edge]:
-        return self._edges
+    def get_edges(self, vertex_sorting: VertexSortOrder =
+                  VertexSortOrder.NATURAL) -> List[Edge]:
+        if vertex_sorting == VertexSortOrder.NATURAL:
+            return self._edges
+        else:
+            return sorted(self._edges,
+                          key=lambda edge: edge.get_tail().get_label(),
+                          reverse=vertex_sorting == VertexSortOrder.DESC)
 
     def remove_edges(self):
         self._edges = list()

@@ -8,6 +8,7 @@ from copy import deepcopy
 from .. util.advisor import Advisor
 from typing import Any, List, Mapping, Set
 from . edge import Edge
+from . vertex_sort_order import VertexSortOrder
 
 
 """ Module that contains the definition of a directed graph as a class """
@@ -17,14 +18,15 @@ class DirectedGraph(object):
     """ Class to represent directed graphs.
     https://en.wikipedia.org/wiki/Directed_graph """
 
-    def __init__(self, vertices: Mapping[Any, List[Any]] = None):
+    def __init__(self, vertices: Mapping[Any, List[Any]] = None,
+                 vertex_sorting=VertexSortOrder.RANDOM):
         """ Initialises a directed graph (with the provided vertices)
 
         Args:
             vertices(dict): a dict with the vertices and their tails in it
         """
 
-        self.directed_graph = DirectedGraphCore(vertices)
+        self.directed_graph = DirectedGraphCore(vertices, vertex_sorting)
 
     def copy(self) -> DirectedGraph:
         """ Copies the directed graph and returns it
