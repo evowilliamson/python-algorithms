@@ -112,7 +112,6 @@ class TestDirectedGraph(unittest.TestCase):
         self.assertTrue(self.has_vertex_label_as_head2(reversed_graph, 1, 0))
         self.assertTrue(self.amount_of_tails2(reversed_graph, 0) == 0)
 
-
     def has_vertex_label_as_head(
             self,
             graph: DirectedGraphCore,

@@ -104,8 +104,8 @@ class DirectedGraphCore(object):
         """ Function that calculates the transposed graph
 
         Args:
-            inplace: if true, then changes the object is self, 
-                if false, returns a copy
+            inplace: if true, then changes the object it self and
+                returns it, if false, returns a copy
 
         Returns:
             DirectedGraph: The reversed graph """
