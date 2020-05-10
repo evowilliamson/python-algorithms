@@ -1,9 +1,7 @@
 from __future__ import annotations
 from . edge import Edge
-from typing import List
-from typing import Mapping
-from typing import Any
-from . vertex_sort_order import VertexSortOrder
+from typing import List, Mapping, Any, Collection, Set
+from . algorithm_ordering import AlgorithmOrdering
 
 """ Module that contains the definition of a vertex in the context of a
 directed graph """
@@ -14,7 +12,8 @@ class Vertex():
         graph, being the indegree, outdegree and the tails that are its
         successors. It inherits from the generic Vertex class """
 
-    def __init__(self, label: str, **attrs):
+    def __init__(self, label: str,
+                 algorithm_ordering=AlgorithmOrdering.NATURAL, **attrs):
         """ Initialises the vertex by adding some specifics
 
         Args:
@@ -23,9 +22,10 @@ class Vertex():
         """
 
         self._label = label
-        self._edges: List[Edge] = list()
-        self._indegree = 0
+        self._algorithm_ordering = algorithm_ordering
         self._attrs = attrs
+        self._edges: Set[Edge] = set()
+        self._indegree = 0
 
     def add_edge(self, head_vertex: Vertex):
         """ This method adds an edge to the set of edges maintained by the
@@ -36,7 +36,7 @@ class Vertex():
 
         """
 
-        self._edges.append(Edge(self, head_vertex))
+        self._edges.add(Edge(self, head_vertex))
 
     def set_attr(self, attr: str, value: Any):
         self._attrs[attr] = value
@@ -58,20 +58,29 @@ class Vertex():
         """ This method decreases the indegree for the incumbent vertex """
         self._indegree -= 1
 
-    def get_heads(self) -> List[Vertex]:
-        return [e.get_head() for e in self._edges]
+    def get_edge_heads(self) -> List[Vertex]:
+        """ Returns the head vertices of the edges of the target vertex """
+        return [e.get_head() for e in self.get_edges()]
 
-    def get_edges(self, vertex_sorting: VertexSortOrder =
-                  VertexSortOrder.NATURAL) -> List[Edge]:
-        if vertex_sorting == VertexSortOrder.NATURAL:
+    def get_edges(self) -> Collection[Edge]:
+        """ Returns the edges of a vertex
+
+        Args:
+            vertex_sorting: Indicates the ordering of vertices that
+                will be used in algorithms where appropriate
+        Returns
+            self._vertices according to the indicated vertex ordering """
+
+        if self._algorithm_ordering == AlgorithmOrdering.NATURAL:
             return self._edges
         else:
             return sorted(self._edges,
-                          key=lambda edge: edge.get_tail().get_label(),
-                          reverse=vertex_sorting == VertexSortOrder.DESC)
+                          key=lambda edge: edge.get_head().get_label(),
+                          reverse=self._algorithm_ordering ==
+                          AlgorithmOrdering.DESC)
 
     def remove_edges(self):
-        self._edges = list()
+        self._edges = set()
 
     def get_indegree(self) -> int:
         return self._indegree
@@ -80,7 +89,8 @@ class Vertex():
         return len(self._edges)
 
     def __str__(self):
-        return str(self.get_label()) + ", outdegree: {}".format(self.get_outdegree()) + \
+        return str(self.get_label()) + ", outdegree: {}".format(
+            self.get_outdegree()) + \
                ", indegree: {}".format(self.get_indegree()) + \
                ", heads: " + ",".join([str(tail.get_label())
-                                      for tail in self.get_heads()])
+                                      for tail in self.get_edge_heads()])

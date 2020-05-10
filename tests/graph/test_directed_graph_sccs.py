@@ -4,8 +4,6 @@ functionality of the directed graph
 
 import unittest
 from pythonalgos.graph.directed_graph import DirectedGraph
-from typing import List, Set
-from pythonalgos.graph.vertex import Vertex
 
 
 class TestDirectedGraphSCCs(unittest.TestCase):

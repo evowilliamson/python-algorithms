@@ -6,7 +6,7 @@ with open("README.md") as f:
     long_desc = f.read()
 
 setup(name="python-algos",
-      version=0.13,
+      version=0.15,
       description="A set of bare algorithms",
       long_description=long_desc,
       long_description_content_type="text/markdown", 

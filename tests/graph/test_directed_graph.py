@@ -1,6 +1,7 @@
 """ Module that contains test for the main directed graph functionality
 """
 
+from pythonalgos.graph.algorithm_ordering import AlgorithmOrdering
 from pythonalgos.graph.directed_graph_core import DirectedGraphCore
 import unittest
 from pythonalgos.graph.directed_graph import DirectedGraph
@@ -32,7 +33,7 @@ class TestDirectedGraph(unittest.TestCase):
         self.assertIsNotNone(vertex)
         self.assertEqual(vertex.get_outdegree(), 0)
         self.assertEqual(vertex.get_indegree(), 0)
-        self.assertListEqual(vertex.get_heads(), list())
+        self.assertListEqual(vertex.get_edge_heads(), list())
 
     def test_add_duplicate_vertex(self):
         label = 7
@@ -47,12 +48,12 @@ class TestDirectedGraph(unittest.TestCase):
         no_heads = 3
         for i in range(no_heads):
             vertex.add_edge(self.directed_graph.get_vertex(i))
-        self.assertEqual(len(vertex.get_heads()), no_heads)
-        self.assertEqual(vertex.get_outdegree(), len(vertex.get_heads()))
+        self.assertEqual(len(vertex.get_edge_heads()), no_heads)
+        self.assertEqual(vertex.get_outdegree(), len(vertex.get_edge_heads()))
 
     def test_outdegree(self):
         vertex = self.directed_graph.get_vertex(1)
-        self.assertEqual(vertex.get_outdegree(), len(vertex.get_heads()))
+        self.assertEqual(vertex.get_outdegree(), len(vertex.get_edge_heads()))
 
     def test_indegree(self):
         vertex_to_test = 6
@@ -82,6 +83,19 @@ class TestDirectedGraph(unittest.TestCase):
         self.assertTrue(reversed_graph ==
                         self.directed_graph.get_direct_graph_core())
         self.check_small_reversed_graph(reversed_graph)
+
+    def test_ordering(self):
+        self.vertices = {5: [5], 1: [2, 3], 2: [3],
+                         3: [4, 6], 4: [5, 6], 0: [1], 6: [6]}
+        self.directed_graph = DirectedGraph(self.vertices,
+                                            AlgorithmOrdering.ASC)
+        self.assertTrue(next(iter(
+            self.directed_graph.get_vertices())).get_label() == 0)
+
+        self.directed_graph = DirectedGraph(self.vertices,
+                                            AlgorithmOrdering.DESC)
+        self.assertTrue(next(iter(
+            self.directed_graph.get_vertices())).get_label() == 6)
 
     def tearDown(self):
         pass
@@ -119,14 +133,14 @@ class TestDirectedGraph(unittest.TestCase):
             head_label: Union[str, int]) -> bool:
         return True if head_label in \
             {v.get_label() for v in
-                graph.get_vertex(vertex_label).get_heads()} \
+                graph.get_vertex(vertex_label).get_edge_heads()} \
             else False
 
     def amount_of_heads(
             self,
             graph: DirectedGraphCore,
             vertex_label: Union[str, int]) -> int:
-        return len(graph.get_vertex(vertex_label).get_heads())
+        return len(graph.get_vertex(vertex_label).get_edge_heads())
 
     def has_vertex_label_as_head2(
             self,
@@ -135,14 +149,14 @@ class TestDirectedGraph(unittest.TestCase):
             head_label: Union[str, int]) -> bool:
         return True if head_label in \
             {v.get_label() for v in
-                graph.get_vertex(vertex_label).get_heads()} \
+                graph.get_vertex(vertex_label).get_edge_heads()} \
             else False
 
     def amount_of_tails2(
             self,
             graph: DirectedGraph,
             vertex_label: Union[str, int]) -> int:
-        return len(graph.get_vertex(vertex_label).get_heads())
+        return len(graph.get_vertex(vertex_label).get_edge_heads())
 
 
 if __name__ == '__main__':

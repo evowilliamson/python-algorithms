@@ -28,7 +28,7 @@ def create_sccs_kosaraju_dfs(directed_graph: DirectedGraphCore,
     stack: List[Vertex] = list()
     sccs: List[Set[Vertex]] = list()
     visited: MutableMapping[Vertex, bool] = dict()
-    for vertex in sorted(directed_graph.get_vertices(), key=lambda vertex: vertex.get_label()):
+    for vertex in directed_graph.get_vertices():
         if visited.get(vertex) is None:
             Logging.log("Vertex {0} not visited, go deep", vertex)
             fill_order_dfd_sccs(directed_graph, vertex, visited, stack)
@@ -70,7 +70,7 @@ def filter_nontrivial(sccs_trivial: List[Set[Vertex]],
         if len(scc) >= 2 or \
             (len(scc) == 1 and vertex.get_indegree() == 1 and
                 vertex.get_outdegree() == 1 and
-                vertex.get_heads()[0] == vertex):
+                vertex.get_edge_heads()[0] == vertex):
             sccs_non_trivial.append(scc)
 
     return sccs_non_trivial
@@ -92,7 +92,7 @@ def visit_dfs_sccs(directed_graph: DirectedGraphCore, vertex: Vertex,
 
     visited[vertex] = True
     scc.add(vertex)
-    for head in sorted(vertex.get_heads(), key=lambda vertex: vertex.get_label()):
+    for head in vertex.get_edge_heads():
         if visited.get(head) is None:
             visit_dfs_sccs(directed_graph, head, visited, scc)
 
@@ -114,7 +114,7 @@ def fill_order_dfd_sccs(directed_graph: DirectedGraphCore, vertex: Vertex,
     """
 
     visited[vertex] = True
-    for head in sorted(vertex.get_heads(), key=lambda vertex: vertex.get_label()):
+    for head in vertex.get_edge_heads():
         if visited.get(head) is None:
             fill_order_dfd_sccs(directed_graph, head, visited, stack)
     stack.append(vertex)

@@ -6,9 +6,9 @@ from . import directed_trail as trail
 from . directed_graph_core import DirectedGraphCore
 from copy import deepcopy
 from .. util.advisor import Advisor
-from typing import Any, List, Mapping, Set
+from typing import Any, List, Mapping, Set, Collection
 from . edge import Edge
-from . vertex_sort_order import VertexSortOrder
+from . algorithm_ordering import AlgorithmOrdering
 
 
 """ Module that contains the definition of a directed graph as a class """
@@ -19,14 +19,14 @@ class DirectedGraph(object):
     https://en.wikipedia.org/wiki/Directed_graph """
 
     def __init__(self, vertices: Mapping[Any, List[Any]] = None,
-                 vertex_sorting=VertexSortOrder.RANDOM):
+                 algorithm_ordering=AlgorithmOrdering.NATURAL):
         """ Initialises a directed graph (with the provided vertices)
 
         Args:
             vertices(dict): a dict with the vertices and their tails in it
         """
 
-        self.directed_graph = DirectedGraphCore(vertices, vertex_sorting)
+        self.directed_graph = DirectedGraphCore(vertices, algorithm_ordering)
 
     def copy(self) -> DirectedGraph:
         """ Copies the directed graph and returns it
@@ -56,7 +56,7 @@ class DirectedGraph(object):
 
         self.directed_graph.create_add_vertex(label)
 
-    def get_vertices(self) -> Set[Vertex]:
+    def get_vertices(self) -> Collection[Vertex]:
         """ Returns the vertices dictionary
 
         Returns
@@ -113,9 +113,6 @@ class DirectedGraph(object):
             empty """
 
         return trail.trail(self.directed_graph, advisor)
-
-    def get_reversed_graph(self) -> DirectedGraphCore:
-        return self.directed_graph.get_reversed_graph()
 
     def reversed(self, inplace=True) -> DirectedGraphCore:
         return self.directed_graph.reversed(inplace)
