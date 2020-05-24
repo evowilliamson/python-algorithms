@@ -9,7 +9,8 @@ from typing import Any, List, MutableMapping, Set
 
 
 def create_sccs_kosaraju_dfs(directed_graph: DirectedGraphCore,
-                             nontrivial: bool
+                             nontrivial: bool,
+                             advisor: Advisor
                              ) -> List[Set[Vertex]]:
     """ Function that creates a list of strongly connected components
     according to Kosaraju's algorithm
@@ -92,24 +93,25 @@ def create_sccs_kosaraju_dfs(directed_graph: DirectedGraphCore,
         """
 
         visited[vertex] = True
+        advisor.advise("visit_vertex", dg, vertex)
         for head in vertex.get_edge_heads():
             if visited.get(head) is None:
                 fill_order_dfd_sccs(head, visited, stack)
+        advisor.advise("add_vertex_to_stack", dg, vertex)
         stack.append(vertex)
 
-    Logging.log("\nStarting")
     stack: List[Vertex] = list()
     sccs: List[Set[Vertex]] = list()
     visited: MutableMapping[Vertex, bool] = dict()
     for vertex in dg.get_vertices():
         if visited.get(vertex) is None:
-            Logging.log("Vertex {0} not visited, go deep", vertex)
             fill_order_dfd_sccs(vertex, visited, stack)
         else:
             Logging.log("Vertex {0} already visited, skipping", vertex)
 
     visited = dict()
     dg.reversed()
+    advisor.advise("reverse_directed_graph", dg)
     for i in reversed(stack):
         if visited.get(i) is None:
             sccs.append(set())

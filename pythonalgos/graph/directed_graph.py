@@ -89,9 +89,19 @@ class DirectedGraph(object):
         return self.directed_graph.__str__()
 
     def create_sccs_kosaraju_dfs(
-            self, nontrivial: bool = True) -> List[Set[Vertex]]:
+            self, nontrivial: bool = True,
+            advisor: Advisor = Advisor()) -> List[Set[Vertex]]:
+        """ Method that calculates the strongly connected components in a
+        directed graph
+
+        Args:
+            nontrivial: indicator that tells whether to calculate only
+                nontrivial sccs (true), or also the trivial ones (false)
+            advisor(Advisor): The class that implements the advice that is to
+        """
+        
         return kosaraju_sccs.create_sccs_kosaraju_dfs(self.directed_graph,
-                                                      nontrivial)
+                                                      nontrivial, advisor)
 
     def is_cyclic(self, advisor: Advisor = Advisor()):
         """ Method that uses a helper module to check for cycles in the
