@@ -97,8 +97,8 @@ def create_sccs_kosaraju_dfs(directed_graph: DirectedGraphCore,
         for head in vertex.get_edge_heads():
             if visited.get(head) is None:
                 fill_order_dfd_sccs(head, visited, stack)
-        advisor.advise("add_vertex_to_stack", dg, vertex)
         stack.append(vertex)
+        advisor.advise("add_vertex_to_stack", dg, vertex, len(stack))
 
     stack: List[Vertex] = list()
     sccs: List[Set[Vertex]] = list()
