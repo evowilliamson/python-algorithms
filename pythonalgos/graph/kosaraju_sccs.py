@@ -59,8 +59,8 @@ def create_sccs_kosaraju_dfs(directed_graph: DirectedGraphCore,
 
         return sccs_non_trivial
 
-    def visit_dfs_sccs(vertex: Vertex, visited: MutableMapping[Any, bool], 
-                       scc: Set[Vertex]):
+    def visit_dfs_sccs(vertex: Vertex, visited: MutableMapping[Any, bool],
+                       scc: Set[Vertex], scc_id: int):
         """ Function that performs a recursive depth first search on the
         directed graph to check whether vertices have been visisted
 
@@ -73,11 +73,12 @@ def create_sccs_kosaraju_dfs(directed_graph: DirectedGraphCore,
 
         visited[vertex] = True
         scc.add(vertex)
+        advisor.advise("add_vertex_to_scc", dg, vertex, scc_id)
         for head in vertex.get_edge_heads():
             if visited.get(head) is None:
-                visit_dfs_sccs(head, visited, scc)
+                visit_dfs_sccs(head, visited, scc, scc_id)
 
-    def fill_order_dfd_sccs(vertex: Vertex, 
+    def fill_order_dfd_sccs(vertex: Vertex,
                             visited: MutableMapping[Vertex, bool],
                             stack: List[Vertex]):
         """ Function that covers the first part of the algorith by determining
@@ -115,6 +116,6 @@ def create_sccs_kosaraju_dfs(directed_graph: DirectedGraphCore,
     for i in reversed(stack):
         if visited.get(i) is None:
             sccs.append(set())
-            visit_dfs_sccs(i, visited, sccs[-1])
+            visit_dfs_sccs(i, visited, sccs[-1], len(sccs))
 
     return filter_nontrivial(sccs) if nontrivial else sccs

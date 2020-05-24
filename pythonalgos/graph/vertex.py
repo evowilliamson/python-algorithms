@@ -1,6 +1,6 @@
 from __future__ import annotations
 from . edge import Edge
-from typing import List, Mapping, Any, Collection, Set
+from typing import List, Mapping, Any, Collection, Set, Dict
 from . algorithm_ordering import AlgorithmOrdering
 
 """ Module that contains the definition of a vertex in the context of a
@@ -22,10 +22,10 @@ class Vertex():
         """
 
         self._label = label
-        self._algorithm_ordering = algorithm_ordering
-        self._attrs = attrs
+        self._algorithm_ordering: AlgorithmOrdering = algorithm_ordering
+        self._attrs: Dict[str, Any] = attrs
         self._edges: Set[Edge] = set()
-        self._indegree = 0
+        self._indegree: int = 0
 
     def add_edge(self, head_vertex: Vertex):
         """ This method adds an edge to the set of edges maintained by the
