@@ -7,7 +7,7 @@ import sys
 def create_dir_in_user_home(dir, overwrite=True):
     if overwrite:
         clean_dir_in_user_home(dir)
-    os.mkdir(Path(get_user_home(), dir))
+    os.makedirs(Path(get_user_home(), dir), exist_ok=True)
 
 
 def clean_dir_in_user_home(dir):

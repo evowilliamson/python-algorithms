@@ -47,6 +47,9 @@ class Vertex():
     def get_attrs(self) -> Mapping[str, Any]:
         return self._attrs
 
+    def reset_attrs(self):
+        self._attrs = dict()
+
     def get_label(self) -> str:
         return self._label
 
