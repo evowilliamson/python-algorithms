@@ -106,7 +106,7 @@ class DirectedGraphCore(object):
         tail.add_edge(head)
         head.increase_indegree()
 
-    def get_all_edges(self) -> Set[Edge]:
+    def get_edges(self) -> Set[Edge]:
         """ Method that retrieves all edges of all vertices
 
         Returns:

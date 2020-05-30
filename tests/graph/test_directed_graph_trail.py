@@ -24,7 +24,7 @@ class TestDirectedGraphTrail(unittest.TestCase):
                          11: []}
         self.directed_graph = DirectedGraph(self.vertices)
         self.directed_graph.trail(TestAdvisor())
-        for edge in self.directed_graph.get_all_edges():
+        for edge in self.directed_graph.get_edges():
             self.assertEqual(edge.get_attr(COUNT), 1)
 
     def tearDown(self):

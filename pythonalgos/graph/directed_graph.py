@@ -74,13 +74,13 @@ class DirectedGraph(object):
 
         self.directed_graph.add_edge(tail, head)
 
-    def get_all_edges(self) -> Set[Edge]:
+    def get_edges(self) -> Set[Edge]:
         """ Method that retrieves all edges of all vertices
 
         Returns:
             set(): A set of all edges in the directed graph """
 
-        return self.directed_graph.get_all_edges()
+        return self.directed_graph.get_edges()
 
     def get_vertices_count(self) -> int:
         return self.directed_graph.get_vertices_count()
