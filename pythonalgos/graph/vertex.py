@@ -50,6 +50,9 @@ class Vertex():
     def reset_attrs(self):
         self._attrs = dict()
 
+    def has_enabled_attr(self, attr: str) -> bool:
+        return attr in self.get_attrs() and self.get_attrs()[attr]
+
     def get_label(self) -> str:
         return self._label
 
